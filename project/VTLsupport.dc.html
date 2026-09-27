@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@500&display=swap" rel="stylesheet">
+<script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
+<style>
+body{margin:0;background:#070709;font-family:'Geist',system-ui,sans-serif;-webkit-font-smoothing:antialiased;color:#EDEDF0}
+a{color:#A78BFA;text-decoration:none}a:hover{color:#C4B5FD}
+iconify-icon{display:inline-flex;flex-shrink:0}
+</style>
+</helmet>
+<section style="display:flex;flex-wrap:wrap;align-items:flex-start;gap:96px;padding:80px">
+
+<!-- ============ DESKTOP HOME ============ -->
+<div data-screen-label="01 Desktop Home" style="display:flex;flex-direction:column;gap:16px">
+<div style="font-size:15px;color:#8A8A96;font-weight:500">Desktop · Home</div>
+<div style="width:1440px;background:#0D0D10;border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,0.06);display:flex;flex-direction:column">
+  <div style="height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;border-bottom:1px solid rgba(255,255,255,0.06);background:#0D0D10">
+    <div style="display:flex;align-items:center;gap:14px;width:320px">
+      <div onClick="{{ toggleSide }}" style="width:34px;height:34px;display:flex;align-items:center;justify-content:center;border-radius:8px;color:#9A9AA6;cursor:pointer" style-hover="background:rgba(255,255,255,0.05);color:#EDEDF0"><iconify-icon icon="{{ chevIcon }}" style="font-size:19px"></iconify-icon></div>
+      <div style="display:flex;align-items:center;gap:9px"><div style="width:26px;height:26px;border-radius:7px;background:#8B5CF6;display:flex;align-items:center;justify-content:center;color:#fff"><iconify-icon icon="lucide:life-buoy" style="font-size:16px"></iconify-icon></div><div style="font-size:18px;font-weight:700;letter-spacing:-0.02em;color:#A78BFA">VTL<span style="color:#EDEDF0;font-weight:600">support</span></div></div>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;height:32px;padding:0 14px;border-radius:999px;background:#16161C;border:1px solid rgba(255,255,255,0.08);font-size:14px;font-weight:500;color:#D4D4DA"><span style="width:7px;height:7px;border-radius:50%;background:#F59E0B"></span>14 open tickets</div>
+    <div style="display:flex;align-items:center;gap:4px;width:320px;justify-content:flex-end">
+      <div style="width:38px;height:38px;display:flex;align-items:center;justify-content:center;border-radius:9px;color:#9A9AA6"><iconify-icon icon="lucide:search" style="font-size:19px"></iconify-icon></div>
+      <div style="position:relative;width:38px;height:38px;display:flex;align-items:center;justify-content:center;border-radius:9px;color:#9A9AA6"><iconify-icon icon="lucide:bell" style="font-size:19px"></iconify-icon><span style="position:absolute;top:9px;right:10px;width:8px;height:8px;border-radius:50%;background:#EF4444;border:2px solid #0D0D10"></span></div>
+      <div style="width:38px;height:38px;display:flex;align-items:center;justify-content:center;border-radius:9px;color:#9A9AA6"><iconify-icon icon="lucide:maximize" style="font-size:18px"></iconify-icon></div>
+      <div style="width:38px;height:38px;display:flex;align-items:center;justify-content:center;border-radius:9px;color:#9A9AA6"><iconify-icon icon="lucide:moon" style="font-size:18px"></iconify-icon></div>
+      <div style="margin-left:8px;width:34px;height:34px;border-radius:50%;background:#26262E;border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:#EDEDF0">LM</div>
+    </div>
+  </div>
+  <div style="display:flex;min-height:1260px">
+    <div style="width:{{ sideW }};flex-shrink:0;border-right:1px solid rgba(255,255,255,0.06);padding:20px 14px;display:flex;flex-direction:column;gap:22px;transition:width .2s">
+      <sc-for list="{{ navHome }}" as="g" hint-placeholder-count="4">
+        <div style="display:flex;flex-direction:column;gap:2px">
+          <sc-if value="{{ showLabels }}" hint-placeholder-val="{{ true }}"><div style="font-size:11px;font-weight:600;letter-spacing:0.09em;color:#6B6B78;padding:0 12px 8px">{{ g.label }}</div></sc-if>
+          <sc-for list="{{ g.items }}" as="it" hint-placeholder-count="3">
+            <div style="display:flex;align-items:center;gap:12px;height:40px;padding:0 12px;justify-content:{{ navJustify }};border-radius:9px;background:{{ it.bg }};color:{{ it.color }};font-size:15px;font-weight:500;cursor:pointer">
+              <iconify-icon icon="{{ it.icon }}" style="font-size:18px;color:{{ it.iconColor }}"></iconify-icon>
+              <sc-if value="{{ showLabels }}" hint-placeholder-val="{{ true }}"><span style="flex:1">{{ it.label }}</span></sc-if>
+              <sc-if value="{{ it.showBadge }}"><span style="min-width:22px;height:20px;padding:0 6px;box-sizing:border-box;border-radius:999px;background:rgba(255,255,255,0.08);font-size:12px;font-weight:600;color:#EDEDF0;display:flex;align-items:center;justify-content:center">{{ it.badge }}</span></sc-if>
+            </div>
+          </sc-for>
+        </div>
+      </sc-for>
+    </div>
+    <div style="flex:1;min-width:0;display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:32px;padding:36px 40px 48px">
+      <div style="display:flex;flex-direction:column;gap:36px;min-width:0">
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <h1 style="margin:0;font-size:30px;font-weight:600;letter-spacing:-0.025em">What is the client reporting?</h1>
+          <div style="height:60px;display:flex;align-items:center;gap:14px;padding:0 20px;background:#16161C;border:1px solid #8B5CF6;box-shadow:0 0 0 4px rgba(139,92,246,0.16);border-radius:12px">
+            <iconify-icon icon="lucide:search" style="font-size:20px;color:#9A9AA6"></iconify-icon>
+            <span style="width:2px;height:22px;background:#EDEDF0;margin-right:-12px"></span>
+            <span style="font-size:17px;color:#6B6B78;flex:1">Describe the fault, or search by equipment…</span>
+            <span style="font-family:'Geist Mono',monospace;font-size:12px;color:#8A8A96;padding:3px 7px;border:1px solid rgba(255,255,255,0.1);border-radius:6px">/</span>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div style="display:flex;align-items:baseline;gap:10px"><h2 style="margin:0;font-size:13px;font-weight:600;letter-spacing:0.09em;color:#9A9AA6">COMMON FAULTS</h2><span style="font-size:13px;color:#6B6B78">8</span></div>
+          <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px">
+            <sc-for list="{{ faults }}" as="c" hint-placeholder-count="8">
+              <div style="position:relative;display:flex;gap:14px;padding:18px;background:#16161C;border:1px solid rgba(255,255,255,0.07);border-radius:12px;cursor:pointer;transition:transform .15s,border-color .15s,box-shadow .15s" style-hover="transform:translateY(-2px);border-color:rgba(139,92,246,0.7);box-shadow:0 10px 28px rgba(0,0,0,0.35)">
+                <div style="width:40px;height:40px;flex-shrink:0;border-radius:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);display:flex;align-items:center;justify-content:center;color:#C9C9D1"><iconify-icon icon="{{ c.icon }}" style="font-size:19px"></iconify-icon></div>
+                <div style="display:flex;flex-direction:column;gap:6px;min-width:0;flex:1">
+                  <div style="font-size:16px;font-weight:600;padding-right:70px">{{ c.title }}</div>
+                  <div style="font-size:15px;color:#9A9AA6;line-height:1.4">{{ c.desc }}</div>
+                  <div style="display:flex;margin-top:4px"><span style="font-size:12px;font-weight:500;color:#C9C9D1;padding:3px 9px;border-radius:6px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.07)">{{ c.tag }}</span></div>
+                </div>
+                <div style="position:absolute;top:18px;right:18px;font-size:12px;color:#6B6B78">avg. {{ c.time }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div style="display:flex;align-items:baseline;gap:10px"><h2 style="margin:0;font-size:13px;font-weight:600;letter-spacing:0.09em;color:#9A9AA6">BY EQUIPMENT</h2><span style="font-size:13px;color:#6B6B78">4</span></div>
+          <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px">
+            <sc-for list="{{ equipment }}" as="c" hint-placeholder-count="4">
+              <div style="position:relative;display:flex;flex-direction:column;gap:12px;padding:18px;background:#16161C;border:1px solid rgba(255,255,255,0.07);border-radius:12px;cursor:pointer;transition:transform .15s,border-color .15s,box-shadow .15s" style-hover="transform:translateY(-2px);border-color:rgba(139,92,246,0.7);box-shadow:0 10px 28px rgba(0,0,0,0.35)">
+                <div style="width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);display:flex;align-items:center;justify-content:center;color:#C9C9D1"><iconify-icon icon="{{ c.icon }}" style="font-size:19px"></iconify-icon></div>
+                <div style="display:flex;flex-direction:column;gap:6px">
+                  <div style="font-size:16px;font-weight:600">{{ c.title }}</div>
+                  <div style="font-size:15px;color:#9A9AA6;line-height:1.4">{{ c.desc }}</div>
+                </div>
+                <div style="display:flex"><span style="font-size:12px;font-weight:500;color:#C9C9D1;padding:3px 9px;border-radius:6px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.07)">{{ c.tag }}</span></div>
+                <div style="position:absolute;top:18px;right:18px;font-size:12px;color:#6B6B78">avg. {{ c.time }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div style="display:flex;align-items:baseline;gap:10px"><h2 style="margin:0;font-size:13px;font-weight:600;letter-spacing:0.09em;color:#9A9AA6">PROCEDURES</h2><span style="font-size:13px;color:#6B6B78">4</span></div>
+          <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px">
+            <sc-for list="{{ procedures }}" as="c" hint-placeholder-count="4">
+              <div style="position:relative;display:flex;gap:14px;padding:18px;background:#16161C;border:1px solid rgba(255,255,255,0.07);border-radius:12px;cursor:pointer;transition:transform .15s,border-color .15s,box-shadow .15s" style-hover="transform:translateY(-2px);border-color:rgba(139,92,246,0.7);box-shadow:0 10px 28px rgba(0,0,0,0.35)">
+                <div style="width:40px;height:40px;flex-shrink:0;border-radius:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);display:flex;align-items:center;justify-content:center;color:#C9C9D1"><iconify-icon icon="{{ c.icon }}" style="font-size:19px"></iconify-icon></div>
+                <div style="display:flex;flex-direction:column;gap:6px;min-width:0;flex:1">
+                  <div style="font-size:16px;font-weight:600;padding-right:70px">{{ c.title }}</div>
+                  <div style="font-size:15px;color:#9A9AA6;line-height:1.4">{{ c.desc }}</div>
+                  <div style="display:flex;margin-top:4px"><span style="font-size:12px;font-weight:500;color:#C9C9D1;padding:3px 9px;border-radius:6px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.07)">{{ c.tag }}</span></div>
+                </div>
+                <div style="position:absolute;top:18px;right:18px;font-size:12px;color:#6B6B78">avg. {{ c.time }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;align-self:start;background:#16161C;border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:24px;gap:22px">
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;align-items:center;gap:10px"><div style="width:36px;height:36px;border-radius:10px;background:#8B5CF6;display:flex;align-items:center;justify-content:center;color:#fff"><iconify-icon icon="lucide:life-buoy" style="font-size:21px"></iconify-icon></div><div style="font-size:20px;font-weight:700;letter-spacing:-0.02em;color:#A78BFA">VTL<span style="color:#EDEDF0;font-weight:600">support</span></div></div>
+          <div style="font-size:15px;color:#9A9AA6;line-height:1.5;text-wrap:pretty">Step-by-step fault finding for live calls. Pick the symptom and follow the prompts.</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:4px">
+          <div style="display:flex;align-items:center;gap:12px;height:40px"><span style="width:8px;height:8px;border-radius:50%;background:#22C55E;box-shadow:0 0 0 4px rgba(34,197,94,0.14)"></span><span style="font-size:22px;font-weight:600;font-variant-numeric:tabular-nums;width:52px">847</span><span style="font-size:15px;color:#9A9AA6">clients online</span></div>
+          <div style="display:flex;align-items:center;gap:12px;height:40px"><span style="width:8px;height:8px;border-radius:50%;background:#EF4444;box-shadow:0 0 0 4px rgba(239,68,68,0.14)"></span><span style="font-size:22px;font-weight:600;font-variant-numeric:tabular-nums;width:52px">12</span><span style="font-size:15px;color:#9A9AA6">faults open</span></div>
+          <div style="display:flex;align-items:center;gap:12px;height:40px"><span style="width:8px;height:8px;border-radius:50%;background:#F59E0B;box-shadow:0 0 0 4px rgba(245,158,11,0.14)"></span><span style="font-size:22px;font-weight:600;font-variant-numeric:tabular-nums;width:52px">3</span><span style="font-size:15px;color:#9A9AA6">awaiting dispatch</span></div>
+        </div>
+        <div style="height:1px;background:rgba(255,255,255,0.07)"></div>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div style="display:flex;justify-content:space-between;align-items:baseline"><div style="font-size:15px;font-weight:600">Recent resolutions</div><a href="#" style="font-size:13px">View all</a></div>
+          <sc-for list="{{ recent }}" as="r" hint-placeholder-count="3">
+            <div style="display:flex;gap:12px;padding:12px 0;border-top:1px solid rgba(255,255,255,0.05)">
+              <iconify-icon icon="lucide:circle-check" style="font-size:18px;color:#22C55E;margin-top:1px"></iconify-icon>
+              <div style="display:flex;flex-direction:column;gap:4px;flex:1;min-width:0">
+                <div style="display:flex;justify-content:space-between;gap:8px"><span style="font-family:'Geist Mono',monospace;font-size:13px;color:#C9C9D1">{{ r.ref }}</span><span style="font-size:13px;color:#6B6B78">{{ r.when }}</span></div>
+                <div style="font-size:15px;color:#EDEDF0">{{ r.fault }}</div>
+                <div style="font-size:13px;color:#8A8A96">{{ r.agent }}</div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ============ DESKTOP FAULT DETAIL ============ -->
+<div data-screen-label="02 Desktop Fault Detail" style="display:flex;flex-direction:column;gap:16px">
+<div style="font-size:15px;color:#8A8A96;font-weight:500">Desktop · Fault detail</div>
+<div style="width:1440px;height:900px;background:#0D0D10;border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,0.06);display:flex;flex-direction:column">
+  <div style="height:60px;flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:0 20px;border-bottom:1px solid rgba(255,255,255,0.06)">
+    <div style="display:flex;align-items:center;gap:14px;width:320px">
+      <div onClick="{{ toggleSide }}" style="width:34px;height:34px;display:flex;align-items:center;justify-content:center;border-radius:8px;color:#9A9AA6;cursor:pointer" style-hover="background:rgba(255,255,255,0.05);color:#EDEDF0"><iconify-icon icon="{{ chevIcon }}" style="font-size:19px"></iconify-icon></div>
+      <div style="display:flex;align-items:center;gap:9px"><div style="width:26px;height:26px;border-radius:7px;background:#8B5CF6;display:flex;align-items:center;justify-content:center;color:#fff"><iconify-icon icon="lucide:life-buoy" style="font-size:16px"></iconify-icon></div><div style="font-size:18px;font-weight:700;letter-spacing:-0.02em;color:#A78BFA">VTL<span style="color:#EDEDF0;font-weight:600">support</span></div></div>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;height:32px;padding:0 14px;border-radius:999px;background:#16161C;border:1px solid rgba(255,255,255,0.08);font-size:14px;font-weight:500;color:#D4D4DA"><span style="width:7px;height:7px;border-radius:50%;background:#F59E0B"></span>14 open tickets</div>
+    <div style="display:flex;align-items:center;gap:4px;width:320px;justify-content:flex-end">
+      <div style="width:38px;height:38px;display:flex;align-items:center;justify-content:center;color:#9A9AA6"><iconify-icon icon="lucide:search" style="font-size:19px"></iconify-icon></div>
+      <div style="position:relative;width:38px;height:38px;display:flex;align-items:center;justify-content:center;color:#9A9AA6"><iconify-icon icon="lucide:bell" style="font-size:19px"></iconify-icon><span style="position:absolute;top:9px;right:10px;width:8px;height:8px;border-radius:50%;background:#EF4444;border:2px solid #0D0D10"></span></div>
+      <div style="width:38px;height:38px;display:flex;align-items:center;justify-content:center;color:#9A9AA6"><iconify-icon icon="lucide:maximize" style="font-size:18px"></iconify-icon></div>
+      <div style="width:38px;height:38px;display:flex;align-items:center;justify-content:center;color:#9A9AA6"><iconify-icon icon="lucide:moon" style="font-size:18px"></iconify-icon></div>
+      <div style="margin-left:8px;width:34px;height:34px;border-radius:50%;background:#26262E;border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600">LM</div>
+    </div>
+  </div>
+  <div style="display:flex;flex:1;min-height:0">
+    <div style="width:{{ sideW }};flex-shrink:0;border-right:1px solid rgba(255,255,255,0.06);padding:20px 14px;display:flex;flex-direction:column;gap:22px;transition:width .2s">
+      <sc-for list="{{ navFault }}" as="g" hint-placeholder-count="4">
+        <div style="display:flex;flex-direction:column;gap:2px">
+          <sc-if value="{{ showLabels }}" hint-placeholder-val="{{ true }}"><div style="font-size:11px;font-weight:600;letter-spacing:0.09em;color:#6B6B78;padding:0 12px 8px">{{ g.label }}</div></sc-if>
+          <sc-for list="{{ g.items }}" as="it" hint-placeholder-count="3">
+            <div style="display:flex;align-items:center;gap:12px;height:40px;padding:0 12px;justify-content:{{ navJustify }};border-radius:9px;background:{{ it.bg }};color:{{ it.color }};font-size:15px;font-weight:500;cursor:pointer">
+              <iconify-icon icon="{{ it.icon }}" style="font-size:18px;color:{{ it.iconColor }}"></iconify-icon>
+              <sc-if value="{{ showLabels }}" hint-placeholder-val="{{ true }}"><span style="flex:1">{{ it.label }}</span></sc-if>
+              <sc-if value="{{ it.showBadge }}"><span style="min-width:22px;height:20px;padding:0 6px;box-sizing:border-box;border-radius:999px;background:rgba(255,255,255,0.08);font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center">{{ it.badge }}</span></sc-if>
+            </div>
+          </sc-for>
+        </div>
+      </sc-for>
+    </div>
+    <div style="flex:1;min-width:0;display:flex;flex-direction:column">
+      <div style="flex:1;min-height:0;overflow:auto;display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:32px;padding:28px 40px">
+        <div style="display:flex;flex-direction:column;gap:20px;min-width:0">
+          <div style="display:flex;align-items:center;gap:8px;font-size:14px;color:#8A8A96"><a href="#" style="color:#9A9AA6;display:flex;align-items:center;gap:6px"><iconify-icon icon="lucide:arrow-left" style="font-size:15px"></iconify-icon>Home</a><span>/</span><span>Common Faults</span><span>/</span><span style="color:#D4D4DA">Red LOS light on the ONT</span></div>
+          <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+            <h1 style="margin:0;font-size:28px;font-weight:600;letter-spacing:-0.025em">Red LOS light on the ONT</h1>
+            <span style="display:flex;align-items:center;gap:7px;height:28px;padding:0 12px;border-radius:999px;background:{{ pill.bg }};border:1px solid {{ pill.border }};color:{{ pill.color }};font-size:13px;font-weight:600"><span style="width:7px;height:7px;border-radius:50%;background:{{ pill.color }}"></span>{{ pill.text }}</span>
+          </div>
+          <div style="display:flex;gap:12px;padding:14px 16px;border-radius:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07)">
+            <iconify-icon icon="lucide:info" style="font-size:18px;color:#9A9AA6;margin-top:2px"></iconify-icon>
+            <div style="font-size:15px;line-height:1.5;color:#C9C9D1"><strong style="color:#EDEDF0;font-weight:600">What this usually means</strong> — the ONT is receiving no optical signal. Usually a break, a sharp bend, or an unseated connector.</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <div style="display:flex;justify-content:space-between;font-size:14px"><span style="font-weight:600;color:#EDEDF0">{{ stepLabel }}</span><span style="color:#8A8A96">Started 1 min 48 s ago</span></div>
+            <div style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px">
+              <sc-for list="{{ stepper }}" as="s" hint-placeholder-count="5">
+                <div style="display:flex;flex-direction:column;gap:8px">
+                  <div style="height:4px;border-radius:2px;background:{{ s.bar }}"></div>
+                  <div style="display:flex;align-items:center;gap:6px;font-size:13px;color:{{ s.color }};font-weight:500"><sc-if value="{{ s.done }}"><iconify-icon icon="lucide:check" style="font-size:14px;color:#22C55E"></iconify-icon></sc-if>{{ s.short }}</div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          <sc-if value="{{ inProgress }}" hint-placeholder-val="{{ true }}">
+            <div style="display:flex;flex-direction:column;gap:22px;padding:36px 40px;background:#1B1B22;border:1px solid rgba(255,255,255,0.09);border-radius:16px;box-shadow:0 1px 0 rgba(255,255,255,0.04) inset,0 16px 40px rgba(0,0,0,0.3)">
+              <div style="font-size:13px;font-weight:600;letter-spacing:0.1em;color:#9A9AA6">{{ cur.label }}</div>
+              <div style="font-size:32px;line-height:1.3;font-weight:600;letter-spacing:-0.02em;text-wrap:pretty">“{{ cur.q }}”</div>
+              <div style="font-size:16px;line-height:1.5;color:#9A9AA6;text-wrap:pretty"><strong style="color:#C9C9D1;font-weight:600">What to expect</strong> — {{ cur.expect }}</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:6px">
+                <sc-for list="{{ cur.answers }}" as="a" hint-placeholder-count="2">
+                  <button onClick="{{ a.pick }}" style="height:68px;border-radius:12px;background:#22222A;border:1px solid rgba(255,255,255,0.12);color:#EDEDF0;font-family:inherit;font-size:18px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px" style-hover="border-color:#8B5CF6;background:#26262F">{{ a.text }}</button>
+                </sc-for>
+              </div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ resolved }}">
+            <div style="display:flex;flex-direction:column;gap:16px;padding:36px 40px;background:#1B1B22;border:1px solid rgba(34,197,94,0.35);border-radius:16px">
+              <div style="display:flex;align-items:center;gap:10px;font-size:13px;font-weight:600;letter-spacing:0.1em;color:#22C55E"><iconify-icon icon="lucide:circle-check" style="font-size:18px"></iconify-icon>RESOLVED</div>
+              <div style="font-size:30px;font-weight:600;letter-spacing:-0.02em">Signal restored after reseating the connector.</div>
+              <div style="font-size:16px;color:#9A9AA6;line-height:1.5">Run the standard checks before closing: ask the client to load a website and confirm Wi-Fi on one device.</div>
+              <div style="display:flex;gap:12px;margin-top:6px"><button style="height:52px;padding:0 24px;border-radius:11px;background:#8B5CF6;border:none;color:#fff;font-family:inherit;font-size:16px;font-weight:600;cursor:pointer">Close ticket VTL-20931</button><button onClick="{{ restart }}" style="height:52px;padding:0 20px;border-radius:11px;background:transparent;border:1px solid rgba(255,255,255,0.12);color:#EDEDF0;font-family:inherit;font-size:16px;font-weight:500;cursor:pointer">Restart walkthrough</button></div>
+            </div>
+          </sc-if>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div style="display:flex;flex-direction:column;gap:12px;padding:18px;background:#16161C;border:1px solid rgba(255,255,255,0.07);border-radius:12px">
+            <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:12px;font-weight:600;letter-spacing:0.09em;color:#6B6B78">ON THE CALL</span><span style="display:flex;align-items:center;gap:6px;font-family:'Geist Mono',monospace;font-size:13px;color:#C9C9D1"><iconify-icon icon="lucide:phone" style="font-size:13px"></iconify-icon>06:12</span></div>
+            <div style="display:flex;flex-direction:column;gap:3px"><div style="font-size:16px;font-weight:600">Thandi Mokoena</div><div style="font-size:14px;color:#9A9AA6">14 Acacia Rd, Northcliff</div></div>
+            <div style="display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:14px"><span style="color:#8A8A96">Ticket</span><span style="font-family:'Geist Mono',monospace;color:#EDEDF0">VTL-20931</span><span style="color:#8A8A96">Client</span><span style="font-family:'Geist Mono',monospace;color:#EDEDF0">CL-10877</span><span style="color:#8A8A96">Plan</span><span>Fibre 100/50</span><span style="color:#8A8A96">ONT</span><span>Huawei HG8145V5</span></div>
+          </div>
+          <div style="display:flex;flex-direction:column;padding:18px;background:#16161C;border:1px solid rgba(255,255,255,0.07);border-radius:12px;gap:4px">
+            <div style="font-size:12px;font-weight:600;letter-spacing:0.09em;color:#6B6B78;padding-bottom:10px">STEPS TAKEN</div>
+            <sc-for list="{{ taken }}" as="t" hint-placeholder-count="1">
+              <div style="display:flex;gap:12px;padding:10px 0;border-top:1px solid rgba(255,255,255,0.05)">
+                <div style="width:22px;height:22px;flex-shrink:0;border-radius:50%;background:rgba(34,197,94,0.14);display:flex;align-items:center;justify-content:center;color:#22C55E"><iconify-icon icon="lucide:check" style="font-size:13px"></iconify-icon></div>
+                <div style="display:flex;flex-direction:column;gap:3px;flex:1;min-width:0">
+                  <div style="display:flex;justify-content:space-between;gap:8px;font-size:13px;color:#8A8A96"><span>Step {{ t.n }} · {{ t.short }}</span><span style="font-family:'Geist Mono',monospace">{{ t.at }}</span></div>
+                  <div style="font-size:15px;color:#EDEDF0">{{ t.answer }}</div>
+                </div>
+              </div>
+            </sc-for>
+            <sc-if value="{{ noneTaken }}"><div style="font-size:14px;color:#8A8A96;padding:10px 0;border-top:1px solid rgba(255,255,255,0.05)">Answers will appear here as you go.</div></sc-if>
+          </div>
+        </div>
+      </div>
+      <div style="height:76px;flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:0 40px;border-top:1px solid rgba(255,255,255,0.06);background:#111115">
+        <button onClick="{{ back }}" style="height:46px;padding:0 20px;border-radius:11px;background:#1E1E25;border:1px solid rgba(255,255,255,0.1);color:#EDEDF0;font-family:inherit;font-size:15px;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:8px" style-hover="background:#24242C"><iconify-icon icon="lucide:arrow-left" style="font-size:16px"></iconify-icon>Back</button>
+        <div style="display:flex;align-items:center;gap:16px"><span style="font-size:14px;color:#8A8A96">Avg. 4 min for this fault</span><button style="height:46px;padding:0 20px;border-radius:11px;background:transparent;border:1px solid rgba(239,68,68,0.6);color:#F87171;font-family:inherit;font-size:15px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:8px" style-hover="background:rgba(239,68,68,0.08)"><iconify-icon icon="lucide:truck" style="font-size:16px"></iconify-icon>Escalate — book a site visit</button></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ============ MOBILE FAULT DETAIL ============ -->
+<div data-screen-label="03 Mobile Fault Detail" style="display:flex;flex-direction:column;gap:16px">
+<div style="font-size:15px;color:#8A8A96;font-weight:500">Mobile · Fault detail</div>
+<div style="width:390px;height:844px;background:#0D0D10;border-radius:44px;overflow:hidden;border:1px solid rgba(255,255,255,0.1);box-shadow:0 0 0 8px #18181C;display:flex;flex-direction:column">
+  <div style="height:46px;flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:0 30px;font-size:15px;font-weight:600"><span>9:41</span><div style="display:flex;gap:6px;align-items:center"><iconify-icon icon="lucide:signal" style="font-size:16px"></iconify-icon><iconify-icon icon="lucide:wifi" style="font-size:16px"></iconify-icon><iconify-icon icon="lucide:battery-full" style="font-size:18px"></iconify-icon></div></div>
+  <div style="height:52px;flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:0 16px;border-bottom:1px solid rgba(255,255,255,0.06)">
+    <div style="display:flex;align-items:center;gap:8px"><div style="width:24px;height:24px;border-radius:7px;background:#8B5CF6;display:flex;align-items:center;justify-content:center;color:#fff"><iconify-icon icon="lucide:life-buoy" style="font-size:15px"></iconify-icon></div><div style="font-size:17px;font-weight:700;letter-spacing:-0.02em;color:#A78BFA">VTL<span style="color:#EDEDF0;font-weight:600">support</span></div></div>
+    <div style="display:flex;align-items:center;gap:10px"><div style="display:flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:999px;background:#16161C;border:1px solid rgba(255,255,255,0.08);font-size:13px;font-weight:500;color:#D4D4DA"><span style="width:6px;height:6px;border-radius:50%;background:#F59E0B"></span>14 open</div><div style="width:32px;height:32px;border-radius:50%;background:#26262E;border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600">LM</div></div>
+  </div>
+  <div style="flex:1;min-height:0;overflow:auto;display:flex;flex-direction:column;gap:14px;padding:16px">
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <div style="display:flex;align-items:center;gap:6px;font-size:14px;color:#9A9AA6"><iconify-icon icon="lucide:chevron-left" style="font-size:16px"></iconify-icon>Home · Common Faults</div>
+      <div style="font-size:22px;font-weight:600;letter-spacing:-0.02em">Red LOS light on the ONT</div>
+      <div style="display:flex;align-items:center;gap:10px"><span style="display:flex;align-items:center;gap:6px;height:26px;padding:0 10px;border-radius:999px;background:{{ pill.bg }};border:1px solid {{ pill.border }};color:{{ pill.color }};font-size:12px;font-weight:600"><span style="width:6px;height:6px;border-radius:50%;background:{{ pill.color }}"></span>{{ pill.text }}</span><span style="font-family:'Geist Mono',monospace;font-size:12px;color:#8A8A96">VTL-20931</span></div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <div style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:5px"><sc-for list="{{ stepper }}" as="s" hint-placeholder-count="5"><div style="height:4px;border-radius:2px;background:{{ s.bar }}"></div></sc-for></div>
+      <div style="display:flex;justify-content:space-between;font-size:13px"><span style="font-weight:600">{{ stepLabel }}</span><span style="color:#8A8A96">{{ prevSummary }}</span></div>
+    </div>
+    <sc-if value="{{ inProgress }}" hint-placeholder-val="{{ true }}">
+      <div style="flex:1;display:flex;flex-direction:column;gap:16px;padding:22px 20px;background:#1B1B22;border:1px solid rgba(255,255,255,0.09);border-radius:16px">
+        <div style="font-size:12px;font-weight:600;letter-spacing:0.1em;color:#9A9AA6">{{ cur.label }}</div>
+        <div style="font-size:25px;line-height:1.3;font-weight:600;letter-spacing:-0.02em;text-wrap:pretty">“{{ cur.q }}”</div>
+        <div style="font-size:15px;line-height:1.5;color:#9A9AA6;text-wrap:pretty"><strong style="color:#C9C9D1;font-weight:600">What to expect</strong> — {{ cur.expect }}</div>
+      </div>
+    </sc-if>
+    <sc-if value="{{ resolved }}">
+      <div style="flex:1;display:flex;flex-direction:column;gap:12px;padding:22px 20px;background:#1B1B22;border:1px solid rgba(34,197,94,0.35);border-radius:16px">
+        <div style="display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;letter-spacing:0.1em;color:#22C55E"><iconify-icon icon="lucide:circle-check" style="font-size:16px"></iconify-icon>RESOLVED</div>
+        <div style="font-size:23px;font-weight:600;line-height:1.3">Signal restored after reseating the connector.</div>
+        <button onClick="{{ restart }}" style="margin-top:auto;height:48px;border-radius:12px;background:transparent;border:1px solid rgba(255,255,255,0.12);color:#EDEDF0;font-family:inherit;font-size:15px;font-weight:500">Restart walkthrough</button>
+      </div>
+    </sc-if>
+  </div>
+  <div style="flex-shrink:0;display:flex;flex-direction:column;gap:10px;padding:12px 16px 14px;border-top:1px solid rgba(255,255,255,0.06);background:#111115">
+    <sc-if value="{{ inProgress }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <sc-for list="{{ cur.answers }}" as="a" hint-placeholder-count="2">
+          <button onClick="{{ a.pick }}" style="height:56px;width:100%;border-radius:12px;background:#22222A;border:1px solid rgba(255,255,255,0.12);color:#EDEDF0;font-family:inherit;font-size:17px;font-weight:600;cursor:pointer" style-active="border-color:#8B5CF6;background:#26262F">{{ a.text }}</button>
+        </sc-for>
+      </div>
+    </sc-if>
+    <div style="display:grid;grid-template-columns:auto 1fr;gap:10px">
+      <button onClick="{{ back }}" style="height:44px;padding:0 16px;border-radius:11px;background:#1E1E25;border:1px solid rgba(255,255,255,0.1);color:#EDEDF0;font-family:inherit;font-size:15px;font-weight:500;display:flex;align-items:center;gap:6px"><iconify-icon icon="lucide:arrow-left" style="font-size:15px"></iconify-icon>Back</button>
+      <button style="height:44px;border-radius:11px;background:transparent;border:1px solid rgba(239,68,68,0.6);color:#F87171;font-family:inherit;font-size:15px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:6px"><iconify-icon icon="lucide:truck" style="font-size:15px"></iconify-icon>Escalate — site visit</button>
+    </div>
+  </div>
+  <div style="height:78px;flex-shrink:0;display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid rgba(255,255,255,0.06);background:#0D0D10;padding-bottom:14px">
+    <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="5">
+      <div style="position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:{{ t.color }};font-size:11px;font-weight:500">
+        <iconify-icon icon="{{ t.icon }}" style="font-size:21px"></iconify-icon>{{ t.label }}
+        <sc-if value="{{ t.showBadge }}"><span style="position:absolute;top:8px;left:calc(50% + 6px);min-width:18px;height:16px;padding:0 4px;box-sizing:border-box;border-radius:999px;background:#2A2A33;font-size:10px;font-weight:600;color:#EDEDF0;display:flex;align-items:center;justify-content:center">{{ t.badge }}</span></sc-if>
+      </div>
+    </sc-for>
+  </div>
+</div>
+</div>
+
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const STEPS = [
+  { short: 'Read lights', label: 'CHECK THE ONT', q: 'Can you read me the lights on the white Huawei box, from top to bottom?', expect: 'POWER should be green. With this fault PON is off or blinking and LOS is red.', answers: ['LOS red, PON off', 'All lights normal'] },
+  { short: 'Steady or blinking', label: 'ASK THE CLIENT', q: 'Is the red light steady, or is it blinking?', expect: 'a steady red usually means a full break. Blinking points to a weak or dirty connector.', answers: ['Steady red', 'Blinking red'] },
+  { short: 'Check cabling', label: 'CHECK THE CABLING', q: 'Follow the thin yellow cable from the box to the wall. Is it bent sharply, pinched or damaged anywhere?', expect: 'fibre fails if bent tighter than a finger. Doors, furniture and pets are the usual causes.', answers: ['Looks undamaged', 'Bent or damaged'] },
+  { short: 'Reseat connector', label: 'ASK THE CLIENT', q: 'Unplug the green connector at the bottom of the box, wait five seconds, then push it back in until it clicks.', expect: 'tell the client not to look into the connector end and to hold it by the plastic housing only.', answers: ['Done, reseated', 'Can\u2019t remove it'] },
+  { short: 'Confirm', label: 'CONFIRM THE FIX', q: 'Give it thirty seconds. Has the red LOS light gone out?', expect: 'PON blinks green, then turns steady within two minutes.', answers: ['Yes, it\u2019s off', 'Still red'] },
+];
+const NAV = [
+  { label: 'START HERE', items: [['home', 'Home', 'lucide:house'], ['tickets', 'My Tickets', 'lucide:ticket', 6], ['recent', 'Recent Calls', 'lucide:phone-incoming']] },
+  { label: 'TROUBLESHOOT', items: [['faults', 'Common Faults', 'lucide:triangle-alert'], ['equip', 'By Equipment', 'lucide:router'], ['proc', 'Procedures', 'lucide:list-checks']] },
+  { label: 'REFERENCE', items: [['lights', 'Light Indicators', 'lucide:lightbulb'], ['esc', 'Escalation Matrix', 'lucide:git-fork'], ['kb', 'Knowledge Base', 'lucide:book-open']] },
+  { label: 'SUPPORT', items: [['team', 'Team Status', 'lucide:users'], ['settings', 'Settings', 'lucide:settings']] },
+];
+const TIMES = ['00:38', '01:12', '02:05', '02:51', '03:30'];
+
+class Component extends DCLogic {
+  state = { idx: 1, answers: ['LOS red, PON off'], collapsed: false };
+
+  nav(active) {
+    return NAV.map(g => ({ label: g.label, items: g.items.map(([id, label, icon, badge]) => {
+      const on = id === active;
+      return { label, icon, badge, showBadge: !!badge && !this.state.collapsed,
+        bg: on ? 'rgba(139,92,246,0.16)' : 'transparent', color: on ? '#FFFFFF' : '#B4B4BE', iconColor: on ? '#A78BFA' : '#8A8A96' };
+    }) }));
+  }
+
+  renderVals() {
+    const { idx, answers, collapsed } = this.state;
+    const resolved = idx >= STEPS.length;
+    const pick = text => () => this.setState(s => ({ idx: s.idx + 1, answers: [...s.answers, text] }));
+    const cur = resolved ? { label: '', q: '', expect: '', answers: [] } : { ...STEPS[idx], answers: STEPS[idx].answers.map(t => ({ text: t, pick: pick(t) })) };
+    const taken = answers.map((a, i) => ({ n: i + 1, short: STEPS[i].short, answer: a, at: TIMES[i] })).reverse();
+    return {
+      sideW: collapsed ? '72px' : '248px', showLabels: !collapsed, navJustify: collapsed ? 'center' : 'flex-start',
+      chevIcon: collapsed ? 'lucide:panel-left-open' : 'lucide:panel-left-close',
+      toggleSide: () => this.setState(s => ({ collapsed: !s.collapsed })),
+      navHome: this.nav('home'), navFault: this.nav('faults'),
+      faults: [
+        { icon: 'lucide:circle-alert', title: 'Red LOS light on the ONT', desc: 'No optical signal reaching the ONT.', tag: 'Fibre', time: '4 min' },
+        { icon: 'lucide:power-off', title: 'No lights on the ONT', desc: 'ONT is dead. Check adapter and wall socket.', tag: 'Power', time: '3 min' },
+        { icon: 'lucide:globe', title: 'ONT is fine but no internet', desc: 'Lights normal, client devices can\u2019t browse.', tag: 'Client side', time: '6 min' },
+        { icon: 'lucide:plug-zap', title: 'PoE injector has no power', desc: 'Injector LED off, radio or router unpowered.', tag: 'Power', time: '3 min' },
+        { icon: 'lucide:wifi-off', title: 'Router not broadcasting Wi-Fi', desc: 'Network name missing from client devices.', tag: 'Router', time: '5 min' },
+        { icon: 'lucide:activity', title: 'Slow or intermittent connection', desc: 'Drops or low speeds, often at peak hours.', tag: 'Signal', time: '8 min' },
+        { icon: 'lucide:key-round', title: 'Client forgot Wi-Fi password', desc: 'Read or reset it from the router panel.', tag: 'Router', time: '2 min' },
+        { icon: 'lucide:map-pin', title: 'Several clients down in one area', desc: 'Likely an OLT or feeder fault. Check the map.', tag: 'Upstream', time: '4 min' },
+      ],
+      equipment: [
+        { icon: 'lucide:hard-drive', title: 'Huawei ONT', desc: 'HG8145V5 and EG8141A5 lights and ports.', tag: 'ONT', time: '4 min' },
+        { icon: 'lucide:router', title: 'Tenda Router', desc: 'AC10 and F6 settings and resets.', tag: 'Router', time: '5 min' },
+        { icon: 'lucide:plug', title: 'PoE Injector', desc: '24V passive units and cabling.', tag: 'Power', time: '3 min' },
+        { icon: 'lucide:cable', title: 'Patch Cord and Cabling', desc: 'SC/APC cords, bends and connectors.', tag: 'Fibre', time: '4 min' },
+      ],
+      procedures: [
+        { icon: 'lucide:settings-2', title: 'Configure a New Router', desc: 'PPPoE login, Wi-Fi name and password.', tag: 'Setup', time: '7 min' },
+        { icon: 'lucide:rotate-ccw', title: 'Recover a Router After Factory Reset', desc: 'Restore PPPoE and Wi-Fi from the client record.', tag: 'Router', time: '6 min' },
+        { icon: 'lucide:server', title: 'Provision an ONT on SmartOLT', desc: 'Authorise the serial and assign the service profile.', tag: 'OLT', time: '5 min' },
+        { icon: 'lucide:clipboard-check', title: 'Standard Checks Before Closing a Ticket', desc: 'Speed test, Wi-Fi on one device, client confirms.', tag: 'Closing', time: '2 min' },
+      ],
+      recent: [
+        { ref: 'CL-10482', fault: 'ONT is fine but no internet', when: '8 min ago', agent: 'Sipho Dlamini' },
+        { ref: 'CL-09917', fault: 'Client forgot Wi-Fi password', when: '23 min ago', agent: 'Lerato Mahlangu' },
+        { ref: 'CL-11206', fault: 'PoE injector has no power', when: '41 min ago', agent: 'Anika Pillay' },
+      ],
+      pill: resolved ? { text: 'Resolved', color: '#22C55E', bg: 'rgba(34,197,94,0.1)', border: 'rgba(34,197,94,0.3)' }
+                     : { text: 'Fibre fault suspected', color: '#EF4444', bg: 'rgba(239,68,68,0.1)', border: 'rgba(239,68,68,0.3)' },
+      stepLabel: resolved ? 'All 5 steps complete' : `Step ${idx + 1} of ${STEPS.length}`,
+      prevSummary: answers.length ? `Last: ${answers[answers.length - 1]}` : 'No answers yet',
+      stepper: STEPS.map((s, i) => ({ short: s.short, done: i < idx,
+        bar: i < idx ? '#22C55E' : i === idx ? '#EDEDF0' : 'rgba(255,255,255,0.1)',
+        color: i === idx ? '#EDEDF0' : i < idx ? '#9A9AA6' : '#6B6B78' })),
+      inProgress: !resolved, resolved, cur, taken, noneTaken: taken.length === 0,
+      back: () => this.setState(s => s.idx > 0 ? { idx: s.idx - 1, answers: s.answers.slice(0, -1) } : null),
+      restart: () => this.setState({ idx: 0, answers: [] }),
+      tabs: [
+        { icon: 'lucide:house', label: 'Home', color: '#8A8A96' },
+        { icon: 'lucide:ticket', label: 'Tickets', color: '#8A8A96', badge: 6, showBadge: true },
+        { icon: 'lucide:triangle-alert', label: 'Troubleshoot', color: '#A78BFA' },
+        { icon: 'lucide:book-open', label: 'Reference', color: '#8A8A96' },
+        { icon: 'lucide:menu', label: 'More', color: '#8A8A96' },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>
