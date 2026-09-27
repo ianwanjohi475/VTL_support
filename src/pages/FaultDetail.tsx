@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { ArrowLeftIcon, CheckIcon, ChevronLeftIcon, InformationCircleIcon, PhoneIcon, TruckIcon } from '@heroicons/react/20/solid'
-import { CheckCircleIcon } from '@heroicons/react/24/solid'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowLeft, faCheck, faChevronLeft, faCircleCheck, faCircleInfo, faPhone, faTruck } from '@fortawesome/free-solid-svg-icons'
 import { Shell } from '../components/Shell'
 import { ACTIVE_CALL, WALKTHROUGHS, type Walkthrough } from '../data'
 
@@ -45,7 +45,7 @@ function WalkthroughView({ flow }: { flow: Walkthrough }) {
       <div className="main-scroll">
         <div className="page fault">
           <div className="fault-work">
-            <Link to="/" className="back-link"><ChevronLeftIcon className="icon-sm" aria-hidden />{flow.section}</Link>
+            <Link to="/" className="back-link"><FontAwesomeIcon icon={faChevronLeft} className="icon-sm" />{flow.section}</Link>
 
             <header className="fault-head">
               <div className="fault-title-row">
@@ -64,7 +64,7 @@ function WalkthroughView({ flow }: { flow: Walkthrough }) {
             </header>
 
             <div className="note">
-              <InformationCircleIcon className="icon-sm" aria-hidden />
+              <FontAwesomeIcon icon={faCircleInfo} className="icon-sm" />
               <p>{flow.meaning}</p>
             </div>
 
@@ -95,7 +95,7 @@ function WalkthroughView({ flow }: { flow: Walkthrough }) {
               </section>
             ) : (
               <section className="card step-card resolved" aria-live="polite">
-                <div className="step-label green-text"><CheckCircleIcon className="icon-sm" aria-hidden />Resolved</div>
+                <div className="step-label green-text"><FontAwesomeIcon icon={faCircleCheck} className="icon-sm" />Resolved</div>
                 <p className="step-q">{flow.resolution.title}</p>
                 <p className="step-expect">{flow.resolution.body}</p>
                 <div className="resolved-actions">
@@ -110,7 +110,7 @@ function WalkthroughView({ flow }: { flow: Walkthrough }) {
             <section className="card side-card">
               <div className="side-head">
                 <h2>On the call</h2>
-                <span className="call-timer mono"><PhoneIcon className="icon-xs" aria-hidden />{mmss(callSec)}</span>
+                <span className="call-timer mono"><FontAwesomeIcon icon={faPhone} className="icon-xs" />{mmss(callSec)}</span>
               </div>
               <div className="call-client">
                 <div className="name">{ACTIVE_CALL.client}</div>
@@ -130,7 +130,7 @@ function WalkthroughView({ flow }: { flow: Walkthrough }) {
                 <ol className="taken">
                   {answers.map((a, i) => ({ ...a, n: i + 1, short: steps[i].short })).reverse().map(t => (
                     <li key={t.n}>
-                      <span className="taken-tick"><CheckIcon className="icon-xs" aria-hidden /></span>
+                      <span className="taken-tick"><FontAwesomeIcon icon={faCheck} className="icon-xs" /></span>
                       <div className="taken-body">
                         <div className="taken-meta"><span>{t.n}. {t.short}</span><span className="mono">{mmss(t.atSec)}</span></div>
                         <div className="taken-answer">{t.answer}</div>
@@ -150,12 +150,12 @@ function WalkthroughView({ flow }: { flow: Walkthrough }) {
         {cur && <div className="answers-mobile">{answerButtons}</div>}
         <div className="footer-actions">
           <button type="button" className="btn btn-secondary" onClick={back} disabled={idx === 0}>
-            <ArrowLeftIcon className="icon-sm" aria-hidden />Back
+            <FontAwesomeIcon icon={faArrowLeft} className="icon-sm" />Back
           </button>
           <div className="right">
             <span className="avg">Avg. {flow.avg} for this fault</span>
             <button type="button" className="btn btn-danger">
-              <TruckIcon className="icon-sm" aria-hidden />
+              <FontAwesomeIcon icon={faTruck} className="icon-sm" />
               <span className="escalate-full">Escalate: book a site visit</span>
               <span className="escalate-short">Escalate</span>
             </button>

@@ -1,14 +1,10 @@
-import type { ComponentType, SVGProps } from 'react'
+import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import {
-  BookOpenIcon, ClipboardDocumentListIcon, Cog6ToothIcon, CpuChipIcon, ExclamationTriangleIcon,
-  HomeIcon, PhoneArrowDownLeftIcon, ArrowsRightLeftIcon, TicketIcon,
-} from '@heroicons/react/24/outline'
-import {
-  HomeIcon as HomeSolid, TicketIcon as TicketSolid, ExclamationTriangleIcon as FaultsSolid,
-  BookOpenIcon as BookSolid,
-} from '@heroicons/react/24/solid'
+  faBook, faGear, faHouse, faListCheck, faMicrochip, faPhoneVolume, faSitemap, faTicket,
+  faTriangleExclamation,
+} from '@fortawesome/free-solid-svg-icons'
 
-type Icon = ComponentType<SVGProps<SVGSVGElement>>
+type Icon = IconDefinition
 
 export type NavId = 'home' | 'tickets' | 'recent' | 'faults' | 'equipment' | 'procedures' | 'kb' | 'escalation' | 'settings'
 
@@ -17,31 +13,31 @@ export interface NavGroup { label?: string; items: NavItem[] }
 
 export const NAV: NavGroup[] = [
   { items: [
-    { id: 'home', label: 'Home', icon: HomeIcon, to: '/' },
-    { id: 'tickets', label: 'My tickets', icon: TicketIcon, badge: 6 },
-    { id: 'recent', label: 'Recent calls', icon: PhoneArrowDownLeftIcon },
+    { id: 'home', label: 'Home', icon: faHouse, to: '/' },
+    { id: 'tickets', label: 'My tickets', icon: faTicket, badge: 6 },
+    { id: 'recent', label: 'Recent calls', icon: faPhoneVolume },
   ] },
   { label: 'Troubleshoot', items: [
-    { id: 'faults', label: 'Common faults', icon: ExclamationTriangleIcon, to: '/?tab=faults' },
-    { id: 'equipment', label: 'Equipment', icon: CpuChipIcon, to: '/?tab=equipment' },
-    { id: 'procedures', label: 'Procedures', icon: ClipboardDocumentListIcon, to: '/?tab=procedures' },
+    { id: 'faults', label: 'Common faults', icon: faTriangleExclamation, to: '/?tab=faults' },
+    { id: 'equipment', label: 'Equipment', icon: faMicrochip, to: '/?tab=equipment' },
+    { id: 'procedures', label: 'Procedures', icon: faListCheck, to: '/?tab=procedures' },
   ] },
   { label: 'Reference', items: [
-    { id: 'kb', label: 'Knowledge base', icon: BookOpenIcon },
-    { id: 'escalation', label: 'Escalation matrix', icon: ArrowsRightLeftIcon },
+    { id: 'kb', label: 'Knowledge base', icon: faBook },
+    { id: 'escalation', label: 'Escalation matrix', icon: faSitemap },
   ] },
 ]
 
-export const SETTINGS_NAV: NavItem = { id: 'settings', label: 'Settings', icon: Cog6ToothIcon }
+export const SETTINGS_NAV: NavItem = { id: 'settings', label: 'Settings', icon: faGear }
 
 export type TabId = 'home' | 'tickets' | 'faults' | 'reference'
 export interface Tab { id: TabId; label: string; icon: Icon; badge?: number; to?: string }
 
 export const TABS: Tab[] = [
-  { id: 'home', label: 'Home', icon: HomeSolid, to: '/' },
-  { id: 'tickets', label: 'Tickets', icon: TicketSolid, badge: 6 },
-  { id: 'faults', label: 'Faults', icon: FaultsSolid, to: '/?tab=faults' },
-  { id: 'reference', label: 'Reference', icon: BookSolid },
+  { id: 'home', label: 'Home', icon: faHouse, to: '/' },
+  { id: 'tickets', label: 'Tickets', icon: faTicket, badge: 6 },
+  { id: 'faults', label: 'Faults', icon: faTriangleExclamation, to: '/?tab=faults' },
+  { id: 'reference', label: 'Reference', icon: faBook },
 ]
 
 export interface Topic {

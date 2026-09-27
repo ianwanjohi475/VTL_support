@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import { ChevronRightIcon, MagnifyingGlassIcon } from '@heroicons/react/20/solid'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faChevronRight, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import { Shell } from '../components/Shell'
 import { CATEGORIES, COUNTERS, type CategoryId, type Topic } from '../data'
 
@@ -23,7 +24,7 @@ function TopicRow({ topic, category }: { topic: Topic; category?: string }) {
           <span className="tag">{category ?? tag}</span>
           <span className="topic-time">{time}</span>
         </span>
-        <ChevronRightIcon className="topic-chevron" aria-hidden />
+        <FontAwesomeIcon icon={faChevronRight} className="topic-chevron" />
       </button>
     </li>
   )
@@ -67,7 +68,7 @@ export function Home() {
           </header>
 
           <label className="search">
-            <MagnifyingGlassIcon className="search-icon" aria-hidden />
+            <FontAwesomeIcon icon={faMagnifyingGlass} className="search-icon" />
             <span className="sr-only">Search faults, equipment and procedures</span>
             <input
               ref={inputRef}
