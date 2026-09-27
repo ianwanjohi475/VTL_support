@@ -13,10 +13,11 @@
   --text-2: #4a4a55;
   --text-3: #71717c;
 
-  --accent: #7c3aed;
-  --accent-hover: #6d28d9;
-  --accent-text: #6d28d9;
-  --accent-soft: #f3eefe;
+  /* VTL brand blue, taken from the logo. */
+  --accent: #0976bb;
+  --accent-hover: #07639e;
+  --accent-text: #0868a6;
+  --accent-soft: #e8f2fa;
 
   --red: #dc2626;
   --red-bg: #fef2f2;
@@ -27,7 +28,7 @@
   --green-border: #bbf7d0;
 
   --shadow: 0 1px 2px rgba(16, 16, 24, 0.05);
-  --focus: 0 0 0 3px rgba(124, 58, 237, 0.18);
+  --focus: 0 0 0 3px rgba(9, 118, 187, 0.18);
   color-scheme: light;
 }
 
@@ -43,10 +44,10 @@
   --text-2: #b4b4be;
   --text-3: #8a8a96;
 
-  --accent: #8b5cf6;
-  --accent-hover: #7c4dee;
-  --accent-text: #a78bfa;
-  --accent-soft: rgba(139, 92, 246, 0.14);
+  --accent: #1683cc;
+  --accent-hover: #1a90de;
+  --accent-text: #5cb0e8;
+  --accent-soft: rgba(22, 131, 204, 0.16);
 
   --red: #f87171;
   --red-bg: rgba(239, 68, 68, 0.1);
@@ -57,7 +58,7 @@
   --green-border: rgba(34, 197, 94, 0.3);
 
   --shadow: none;
-  --focus: 0 0 0 3px rgba(139, 92, 246, 0.25);
+  --focus: 0 0 0 3px rgba(22, 131, 204, 0.3);
   color-scheme: dark;
 }
 
@@ -194,22 +195,20 @@ h1, h2, p { margin: 0; }
   border-bottom: 1px solid var(--border);
 }
 
-.logo { display: flex; align-items: center; gap: 10px; color: var(--text); }
+.logo { display: flex; align-items: center; gap: 12px; color: var(--text); }
 .logo:hover { text-decoration: none; }
-.logo-mark {
-  width: 28px;
-  height: 28px;
-  border-radius: 7px;
-  background: var(--accent);
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  flex-shrink: 0;
+.logo-img { height: 46px; width: auto; display: block; flex-shrink: 0; }
+.logo-dark { display: none; }
+:root[data-theme='dark'] .logo-light { display: none; }
+:root[data-theme='dark'] .logo-dark { display: block; }
+.logo-word {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-3);
+  white-space: nowrap;
+  padding-left: 12px;
+  border-left: 1px solid var(--border-strong);
 }
-.logo-word { font-size: 17px; font-weight: 700; letter-spacing: -0.02em; white-space: nowrap; }
-.logo-word span { font-weight: 500; color: var(--text-2); }
 
 .sidebar-nav { flex: 1; overflow-y: auto; padding: 16px 12px; display: flex; flex-direction: column; gap: 20px; }
 .nav-group { display: flex; flex-direction: column; gap: 2px; }
@@ -236,29 +235,15 @@ h1, h2, p { margin: 0; }
 .nav-item.active { background: var(--accent-soft); color: var(--accent-text); }
 .nav-item.active .icon { color: var(--accent-text); }
 .nav-text { flex: 1; white-space: nowrap; overflow: hidden; }
-.nav-badge {
-  min-width: 22px;
-  height: 20px;
-  padding: 0 6px;
-  border-radius: 999px;
-  background: var(--hover);
-  border: 1px solid var(--border);
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--text-2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 
 .sidebar-foot { padding: 12px; border-top: 1px solid var(--border); display: flex; flex-direction: column; gap: 2px; }
 
 .sidebar.collapsed { width: 68px; }
-.sidebar.collapsed .sidebar-brand { padding: 0 20px; }
+.sidebar.collapsed .sidebar-brand { padding: 0 10px; justify-content: center; }
+.sidebar.collapsed .logo-img { height: auto; width: 46px; }
 .sidebar.collapsed .logo-word,
 .sidebar.collapsed .nav-label,
-.sidebar.collapsed .nav-text,
-.sidebar.collapsed .nav-badge { display: none; }
+.sidebar.collapsed .nav-text { display: none; }
 .sidebar.collapsed .nav-item { justify-content: center; padding: 0; }
 
 /* Top bar */
@@ -283,21 +268,6 @@ h1, h2, p { margin: 0; }
 .crumbs > span[aria-hidden] { color: var(--border-strong); }
 .crumbs [aria-current] { overflow: hidden; text-overflow: ellipsis; }
 
-.tickets-pill {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  height: 32px;
-  padding: 0 12px;
-  margin-right: 6px;
-  border-radius: 999px;
-  border: 1px solid var(--border);
-  font-size: 13.5px;
-  font-weight: 500;
-  color: var(--text-2);
-  white-space: nowrap;
-}
-.tickets-pill .dot { width: 7px; height: 7px; background: var(--amber); }
 
 .icon-btn {
   position: relative;
@@ -324,23 +294,7 @@ h1, h2, p { margin: 0; }
   border: 2px solid var(--surface);
 }
 
-.agent { display: flex; align-items: center; gap: 10px; margin-left: 8px; padding-left: 14px; border-left: 1px solid var(--border); }
-.avatar {
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  background: var(--accent-soft);
-  color: var(--accent-text);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 13px;
-  font-weight: 600;
-  flex-shrink: 0;
-}
-.agent-text { display: flex; flex-direction: column; line-height: 1.25; }
-.agent-name { font-size: 13.5px; font-weight: 600; white-space: nowrap; }
-.agent-role { font-size: 12px; color: var(--text-3); }
+.icon-btn.account .icon { font-size: 24px; }
 
 /* Bottom tab bar (mobile only) */
 
@@ -369,22 +323,6 @@ h1, h2, p { margin: 0; }
 }
 .tab .icon { font-size: 19px; height: 22px; }
 .tab.active { color: var(--accent-text); }
-.tab-badge {
-  position: absolute;
-  top: 8px;
-  left: calc(50% + 6px);
-  min-width: 18px;
-  height: 16px;
-  padding: 0 4px;
-  border-radius: 999px;
-  background: var(--red);
-  color: #fff;
-  font-size: 10px;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 
 /* ───────────────────────── Home ───────────────────────── */
 
@@ -634,10 +572,10 @@ h1, h2, p { margin: 0; }
 
 @media (max-width: 1199px) {
   .sidebar, .sidebar.collapsed { width: 68px; }
-  .sidebar .logo-word, .sidebar .nav-label, .sidebar .nav-text, .sidebar .nav-badge, .collapse-btn { display: none; }
+  .sidebar .logo-word, .sidebar .nav-label, .sidebar .nav-text, .collapse-btn { display: none; }
   .sidebar .nav-item { justify-content: center; padding: 0; }
-  .agent-text { display: none; }
-  .agent { padding-left: 10px; }
+  .sidebar .sidebar-brand { padding: 0 10px; justify-content: center; }
+  .sidebar .logo-img { height: auto; width: 46px; }
 
   .page { padding: 28px 32px 40px; }
   .topbar { padding: 0 20px 0 32px; }
@@ -656,10 +594,7 @@ h1, h2, p { margin: 0; }
   .topbar-brand { display: block; }
   .topbar-title { display: none; }
   .topbar-actions { margin-left: auto; gap: 2px; }
-  .tickets-pill { height: 30px; padding: 0 10px; margin-right: 2px; }
-  .pill-label { display: none; }
-  .agent { margin-left: 4px; padding-left: 0; border-left: none; }
-  .avatar { width: 32px; height: 32px; font-size: 12px; }
+  .logo-img { height: 36px; }
 
   .page { padding: 20px 16px 28px; }
   .page-head h1 { font-size: 23px; }

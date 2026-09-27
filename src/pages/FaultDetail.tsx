@@ -1,40 +1,22 @@
-import { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { useState } from 'react'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowLeft, faCheck, faChevronLeft, faCircleCheck, faCircleInfo, faPhone, faTruck } from '@fortawesome/free-solid-svg-icons'
+import { faArrowLeft, faCheck, faChevronLeft, faCircleCheck, faCircleInfo, faTruck } from '@fortawesome/free-solid-svg-icons'
 import { Shell } from '../components/Shell'
-import { ACTIVE_CALL, WALKTHROUGHS, type Walkthrough } from '../data'
-
-interface Answer { answer: string; atSec: number }
-
-/** Seconds elapsed since `startMs`, ticking once a second. */
-function useElapsed(startMs: number) {
-  const [now, setNow] = useState(() => Date.now())
-  useEffect(() => {
-    const id = setInterval(() => setNow(Date.now()), 1000)
-    return () => clearInterval(id)
-  }, [])
-  return Math.max(0, Math.floor((now - startMs) / 1000))
-}
-
-const mmss = (sec: number) => `${String(Math.floor(sec / 60)).padStart(2, '0')}:${String(sec % 60).padStart(2, '0')}`
+import { WALKTHROUGHS, type Walkthrough } from '../data'
 
 function WalkthroughView({ flow }: { flow: Walkthrough }) {
   const { steps } = flow
-  const [mountedAt] = useState(() => Date.now())
-  const [startedAt, setStartedAt] = useState(() => mountedAt - ACTIVE_CALL.walkthroughElapsedSec * 1000)
-  const [answers, setAnswers] = useState<Answer[]>(ACTIVE_CALL.answered)
-  const callSec = useElapsed(mountedAt - ACTIVE_CALL.callElapsedSec * 1000)
-  const flowSec = useElapsed(startedAt)
+  const navigate = useNavigate()
+  const [answers, setAnswers] = useState<string[]>([])
 
   const idx = answers.length
   const resolved = idx >= steps.length
   const cur = resolved ? null : steps[idx]
 
-  const pick = (answer: string) =>
-    setAnswers(a => (a.length < steps.length ? [...a, { answer, atSec: Math.floor((Date.now() - startedAt) / 1000) }] : a))
+  const pick = (answer: string) => setAnswers(a => (a.length < steps.length ? [...a, answer] : a))
   const back = () => setAnswers(a => a.slice(0, -1))
-  const restart = () => { setAnswers([]); setStartedAt(Date.now()) }
+  const restart = () => setAnswers([])
 
   const answerButtons = cur?.answers.map(text => (
     <button key={text} type="button" className="answer" onClick={() => pick(text)}>{text}</button>
@@ -45,7 +27,7 @@ function WalkthroughView({ flow }: { flow: Walkthrough }) {
       <div className="main-scroll">
         <div className="page fault">
           <div className="fault-work">
-            <Link to="/" className="back-link"><FontAwesomeIcon icon={faChevronLeft} className="icon-sm" />{flow.section}</Link>
+            <Link to="/" className="back-link"><FontAwesomeIcon icon={faChevronLeft} className="icon-xs" />{flow.section}</Link>
 
             <header className="fault-head">
               <div className="fault-title-row">
@@ -55,11 +37,9 @@ function WalkthroughView({ flow }: { flow: Walkthrough }) {
                   : <span className="status-pill red"><span className="dot" />{flow.suspected}</span>}
               </div>
               <p className="fault-meta">
-                <span className="mono">{ACTIVE_CALL.ticket}</span>
+                <span>{steps.length} steps</span>
                 <span aria-hidden>·</span>
-                <span>{ACTIVE_CALL.client}</span>
-                <span aria-hidden>·</span>
-                <span>Elapsed <span className="mono">{mmss(flowSec)}</span></span>
+                <span>Usually takes {flow.avg}</span>
               </p>
             </header>
 
@@ -89,7 +69,7 @@ function WalkthroughView({ flow }: { flow: Walkthrough }) {
             {cur ? (
               <section className="card step-card" aria-live="polite">
                 <div className="step-label">{cur.label}</div>
-                <p className="step-q">“{cur.q}”</p>
+                <p className="step-q">{cur.q}</p>
                 <p className="step-expect"><strong>What to expect:</strong> {cur.expect}</p>
                 <div className="answers">{answerButtons}</div>
               </section>
@@ -99,8 +79,8 @@ function WalkthroughView({ flow }: { flow: Walkthrough }) {
                 <p className="step-q">{flow.resolution.title}</p>
                 <p className="step-expect">{flow.resolution.body}</p>
                 <div className="resolved-actions">
-                  <button type="button" className="btn btn-primary">Close ticket {ACTIVE_CALL.ticket}</button>
-                  <button type="button" className="btn btn-secondary" onClick={restart}>Restart walkthrough</button>
+                  <button type="button" className="btn btn-primary" onClick={() => navigate('/')}>Back to home</button>
+                  <button type="button" className="btn btn-secondary" onClick={restart}>Start again</button>
                 </div>
               </section>
             )}
@@ -108,38 +88,21 @@ function WalkthroughView({ flow }: { flow: Walkthrough }) {
 
           <aside className="fault-aside">
             <section className="card side-card">
-              <div className="side-head">
-                <h2>On the call</h2>
-                <span className="call-timer mono"><FontAwesomeIcon icon={faPhone} className="icon-xs" />{mmss(callSec)}</span>
-              </div>
-              <div className="call-client">
-                <div className="name">{ACTIVE_CALL.client}</div>
-                <div className="muted">{ACTIVE_CALL.address}</div>
-              </div>
-              <dl className="facts">
-                <dt>Ticket</dt><dd className="mono">{ACTIVE_CALL.ticket}</dd>
-                <dt>Client</dt><dd className="mono">{ACTIVE_CALL.clientRef}</dd>
-                <dt>Plan</dt><dd>{ACTIVE_CALL.plan}</dd>
-                <dt>ONT</dt><dd>{ACTIVE_CALL.ont}</dd>
-              </dl>
-            </section>
-
-            <section className="card side-card">
-              <div className="side-head"><h2>Steps taken</h2></div>
+              <div className="side-head"><h2>Your answers</h2></div>
               {answers.length ? (
                 <ol className="taken">
-                  {answers.map((a, i) => ({ ...a, n: i + 1, short: steps[i].short })).reverse().map(t => (
+                  {answers.map((answer, i) => ({ answer, n: i + 1, short: steps[i].short })).reverse().map(t => (
                     <li key={t.n}>
                       <span className="taken-tick"><FontAwesomeIcon icon={faCheck} className="icon-xs" /></span>
                       <div className="taken-body">
-                        <div className="taken-meta"><span>{t.n}. {t.short}</span><span className="mono">{mmss(t.atSec)}</span></div>
+                        <div className="taken-meta"><span>Step {t.n} · {t.short}</span></div>
                         <div className="taken-answer">{t.answer}</div>
                       </div>
                     </li>
                   ))}
                 </ol>
               ) : (
-                <p className="muted small">Answers will appear here as you go.</p>
+                <p className="muted small">Your answers will appear here as you go.</p>
               )}
             </section>
           </aside>
@@ -153,7 +116,6 @@ function WalkthroughView({ flow }: { flow: Walkthrough }) {
             <FontAwesomeIcon icon={faArrowLeft} className="icon-sm" />Back
           </button>
           <div className="right">
-            <span className="avg">Avg. {flow.avg} for this fault</span>
             <button type="button" className="btn btn-danger">
               <FontAwesomeIcon icon={faTruck} className="icon-sm" />
               <span className="escalate-full">Escalate: book a site visit</span>

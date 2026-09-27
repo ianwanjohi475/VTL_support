@@ -15,7 +15,7 @@ function storedTheme(): Theme | null {
   } catch { return null }
 }
 
-/** Current theme, following the OS until the agent picks one explicitly. */
+/** Current theme, following the OS until the user picks one explicitly. */
 export function useTheme() {
   const [theme, setTheme] = useState<Theme>(() => storedTheme() ?? systemTheme())
 

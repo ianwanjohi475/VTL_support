@@ -63,8 +63,8 @@ export function Home() {
       <div className="main-scroll">
         <div className="page home">
           <header className="page-head">
-            <h1>What is the client reporting?</h1>
-            <p>Pick the symptom and follow the steps with the client.</p>
+            <h1>What’s the problem?</h1>
+            <p>Pick the symptom and follow the steps to fix it.</p>
           </header>
 
           <label className="search">

@@ -1,8 +1,10 @@
 import { useState, type ReactNode } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAnglesLeft, faAnglesRight, faBell, faHeadset, faMoon, faSun } from '@fortawesome/free-solid-svg-icons'
-import { AGENT, NAV, OPEN_TICKETS, SETTINGS_NAV, TABS, type NavId, type NavItem, type TabId } from '../data'
+import { faAnglesLeft, faAnglesRight, faBell, faCircleUser, faMoon, faSun } from '@fortawesome/free-solid-svg-icons'
+import { NAV, SETTINGS_NAV, TABS, type NavId, type NavItem, type TabId } from '../data'
+import logoUrl from '../assets/vtl-logo-compact.png'
+import logoDarkUrl from '../assets/vtl-logo-compact-dark.png'
 import { useTheme } from '../theme'
 
 const COLLAPSE_KEY = 'vtl.sidebarCollapsed'
@@ -13,16 +15,17 @@ function readCollapsed() {
 
 export function Logo() {
   return (
-    <Link to="/" className="logo" aria-label="VTLsupport home">
-      <span className="logo-mark" aria-hidden><FontAwesomeIcon icon={faHeadset} /></span>
-      <span className="logo-word">VTL<span>support</span></span>
+    <Link to="/" className="logo" aria-label="VTL Telecom troubleshooting, home">
+      <img src={logoUrl} alt="VTL Telecom" className="logo-img logo-light" />
+      <img src={logoDarkUrl} alt="" aria-hidden className="logo-img logo-dark" />
+      <span className="logo-word">Troubleshooting</span>
     </Link>
   )
 }
 
 function NavButton({ item, active, collapsed }: { item: NavItem; active: boolean; collapsed: boolean }) {
   const navigate = useNavigate()
-  const { label, icon, badge, to } = item
+  const { label, icon, to } = item
   return (
     <button
       type="button"
@@ -33,7 +36,6 @@ function NavButton({ item, active, collapsed }: { item: NavItem; active: boolean
     >
       <FontAwesomeIcon icon={icon} fixedWidth className="icon" />
       <span className="nav-text">{label}</span>
-      {badge ? <span className="nav-badge">{badge}</span> : null}
     </button>
   )
 }
@@ -74,9 +76,6 @@ function TopBar({ title }: { title: ReactNode }) {
       <div className="topbar-brand"><Logo /></div>
       <div className="topbar-title">{title}</div>
       <div className="topbar-actions">
-        <span className="tickets-pill" title="Open tickets in your queue">
-          <span className="dot" /><span>{OPEN_TICKETS}<span className="pill-label"> open tickets</span></span>
-        </span>
         <button
           type="button"
           className="icon-btn"
@@ -89,13 +88,9 @@ function TopBar({ title }: { title: ReactNode }) {
         <button type="button" className="icon-btn" aria-label="Notifications, 1 unread">
           <FontAwesomeIcon icon={faBell} fixedWidth className="icon" /><span className="notif-dot" />
         </button>
-        <div className="agent">
-          <span className="avatar" aria-hidden>{AGENT.initials}</span>
-          <span className="agent-text">
-            <span className="agent-name">{AGENT.name}</span>
-            <span className="agent-role">{AGENT.role}</span>
-          </span>
-        </div>
+        <button type="button" className="icon-btn account" aria-label="Account">
+          <FontAwesomeIcon icon={faCircleUser} className="icon" />
+        </button>
       </div>
     </header>
   )
@@ -105,7 +100,7 @@ function TabBar({ active }: { active: TabId }) {
   const navigate = useNavigate()
   return (
     <nav className="tabbar" aria-label="Main">
-      {TABS.map(({ id, label, icon, badge, to }) => (
+      {TABS.map(({ id, label, icon, to }) => (
         <button
           key={id}
           type="button"
@@ -115,7 +110,6 @@ function TabBar({ active }: { active: TabId }) {
         >
           <FontAwesomeIcon icon={icon} className="icon" />
           {label}
-          {badge ? <span className="tab-badge">{badge}</span> : null}
         </button>
       ))}
     </nav>
