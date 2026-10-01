@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
+import { ArrowRight, Lightbulb } from '@phosphor-icons/react'
+import { Caption, Tile } from '../components/ui'
 import { DEVICES, type LightStatus } from '../data/lights'
 import { GUIDE_BY_SLUG } from '../data/guides'
 
@@ -11,7 +11,7 @@ export function Lights() {
     <div className="page">
       <header className="page-head">
         <div>
-          <span className="comic">Reference</span>
+          <Caption>Reference</Caption>
           <h1>Light guide</h1>
           <p>Ask the client to read the lights from top to bottom, then match them here.</p>
         </div>
@@ -19,11 +19,14 @@ export function Lights() {
 
       {DEVICES.map(d => (
         <section className="section" key={d.title}>
-          <div className="section-head">
-            <h2>{d.title}</h2>
-            <span className="muted">{d.subtitle}</span>
+          <div className="device-head">
+            <Tile icon={Lightbulb} tone={d.title.startsWith('Huawei') ? 'rose' : 'violet'} />
+            <div>
+              <h2 className="section-title">{d.title}</h2>
+              <span className="muted">{d.subtitle}</span>
+            </div>
           </div>
-          <div className="panel table-wrap">
+          <div className="card table-wrap">
             <table className="lights">
               <thead>
                 <tr><th>Light</th><th>State</th><th>Meaning</th><th>Status</th><th><span className="sr-only">Action</span></th></tr>
@@ -37,7 +40,7 @@ export function Lights() {
                     <td className="status-cell"><span className={`status ${s.status}`}><span className="dot" />{STATUS[s.status]}</span></td>
                     <td className="action">
                       {s.guide && s.status !== 'ok' && (
-                        <Link to={`/guides/${s.guide}`}>{GUIDE_BY_SLUG[s.guide].title}<FontAwesomeIcon icon={faArrowRight} /></Link>
+                        <Link to={`/guides/${s.guide}`}>{GUIDE_BY_SLUG[s.guide].title}<ArrowRight size={14} weight="bold" /></Link>
                       )}
                     </td>
                   </tr>

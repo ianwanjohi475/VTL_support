@@ -1,15 +1,16 @@
 import type { ReactNode } from 'react'
 import { Link, NavLink } from 'react-router-dom'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faLightbulb, faListCheck, faMoon, faSun, faTerminal } from '@fortawesome/free-solid-svg-icons'
+import { Lightbulb, ListChecks, Moon, Siren, Sun, Terminal, Wrench } from '@phosphor-icons/react'
 import { useTheme } from '../theme'
 import logoUrl from '../assets/vtl-logo-compact.png'
 import logoDarkUrl from '../assets/vtl-logo-compact-dark.png'
 
 const NAV = [
-  { to: '/', label: 'Guides', icon: faListCheck, end: true },
-  { to: '/commands', label: 'Network commands', short: 'Commands', icon: faTerminal },
-  { to: '/lights', label: 'Light guide', short: 'Lights', icon: faLightbulb },
+  { to: '/', label: 'Guides', Icon: ListChecks, end: true },
+  { to: '/incidents', label: 'Incidents', Icon: Siren },
+  { to: '/router', label: 'Router setup', short: 'Router', Icon: Wrench },
+  { to: '/commands', label: 'Commands', Icon: Terminal },
+  { to: '/lights', label: 'Light guide', short: 'Lights', Icon: Lightbulb },
 ]
 
 export function Layout({ children }: { children: ReactNode }) {
@@ -25,9 +26,9 @@ export function Layout({ children }: { children: ReactNode }) {
             <span className="brand-name">Support Toolkit</span>
           </Link>
           <nav className="nav" aria-label="Main">
-            {NAV.map(n => (
-              <NavLink key={n.to} to={n.to} end={n.end} className="nav-link">
-                <FontAwesomeIcon icon={n.icon} className="nav-icon" />{n.label}
+            {NAV.map(({ to, label, Icon, end }) => (
+              <NavLink key={to} to={to} end={end} className="nav-link">
+                <Icon size={18} weight="duotone" className="nav-icon" />{label}
               </NavLink>
             ))}
           </nav>
@@ -38,18 +39,23 @@ export function Layout({ children }: { children: ReactNode }) {
             aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
             title={theme === 'dark' ? 'Light mode' : 'Dark mode'}
           >
-            <FontAwesomeIcon icon={theme === 'dark' ? faSun : faMoon} />
+            {theme === 'dark' ? <Sun size={19} weight="duotone" /> : <Moon size={19} weight="duotone" />}
           </button>
         </div>
       </header>
 
       <main className="content">{children}</main>
 
+      <footer className="footer">
+        <span>VTL Telecom · Support Toolkit</span>
+        <span className="muted">Advancing Technology, Driving Change</span>
+      </footer>
+
       <nav className="tabbar" aria-label="Main">
-        {NAV.map(n => (
-          <NavLink key={n.to} to={n.to} end={n.end} className="tab">
-            <FontAwesomeIcon icon={n.icon} className="tab-icon" />
-            {n.short ?? n.label}
+        {NAV.map(({ to, label, short, Icon, end }) => (
+          <NavLink key={to} to={to} end={end} className="tab">
+            <Icon size={22} weight="duotone" />
+            {short ?? label}
           </NavLink>
         ))}
       </nav>

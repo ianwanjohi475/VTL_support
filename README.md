@@ -13,6 +13,11 @@ on what the client reports.
   escalate (with a checklist of what to record).
 - **Copy notes:** every guide keeps a list of steps taken and answers, ready to
   paste into the ticket.
+- **Incident response:** playbooks for a client offline, an LOS alarm, a
+  router freeze and an area outage. Each has severity, response targets, a
+  timeline, who to notify, a client message to copy and a closing checklist.
+- **Router setup:** step-by-step Tenda router changes (PPPoE, Wi-Fi name and
+  password, channel, DNS, login password, reboot schedule, reset, firmware).
 - **Network commands:** ping, packet-loss test, traceroute, IP renew, DNS
   flush, nslookup and Wi-Fi signal, for Windows and macOS, with how to read the
   results.
@@ -37,5 +42,8 @@ All the content lives in `src/data/`:
   (`guide`, optionally with `step`).
 - `commands.ts`: the network commands page.
 - `lights.ts`: the light guide tables.
+- `incidents.ts`: the incident playbooks. Response and restore targets are
+  defaults; set them to VTL's SLA.
+- `router.ts`: the router setup tasks.
 
 The original design handoff is kept in `project/` and `chats/`.

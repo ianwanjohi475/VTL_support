@@ -1,7 +1,6 @@
-import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
-import {
-  faCircleExclamation, faGaugeHigh, faGlobe, faKey, faLink, faPlug, faRotateRight, faWifi,
-} from '@fortawesome/free-solid-svg-icons'
+import type { Icon } from '@phosphor-icons/react'
+import { ArrowsClockwise, Gauge, Globe, LinkSimple, Password, Plug, WarningCircle, WifiSlash } from '@phosphor-icons/react'
+import type { Tone } from './tones'
 
 /** A command shown with Windows and macOS variants. `mac: null` means there is
  *  no terminal equivalent and `macNote` explains what to do instead. */
@@ -48,7 +47,8 @@ export interface Guide {
   title: string
   summary: string
   category: 'Connection' | 'Router' | 'Speed' | 'Fibre' | 'Wi-Fi' | 'Power'
-  icon: IconDefinition
+  icon: Icon
+  tone: Tone
   minutes: number
   keywords: string
   start: string
@@ -72,7 +72,8 @@ export const GUIDES: Guide[] = [
     title: 'No internet on any device',
     summary: 'Nothing loads on phones, laptops or TVs.',
     category: 'Connection',
-    icon: faGlobe,
+    icon: Globe,
+    tone: 'blue',
     minutes: 8,
     keywords: 'down offline not working no connection internet ping pppoe',
     start: 'ont-lights',
@@ -234,7 +235,8 @@ export const GUIDES: Guide[] = [
     title: 'Router frozen or not responding',
     summary: 'Wi-Fi visible but nothing works, lights stuck, or settings page won’t open.',
     category: 'Router',
-    icon: faRotateRight,
+    icon: ArrowsClockwise,
+    tone: 'violet',
     minutes: 6,
     keywords: 'freeze freezing hang stuck reboot restart reset tenda router not responding',
     start: 'sys-light',
@@ -342,7 +344,8 @@ export const GUIDES: Guide[] = [
     title: 'Slow or dropping connection',
     summary: 'Low speeds, buffering, or the connection keeps cutting out.',
     category: 'Speed',
-    icon: faGaugeHigh,
+    icon: Gauge,
+    tone: 'amber',
     minutes: 10,
     keywords: 'slow speed lag buffering drops dropping intermittent packet loss latency ping speedtest',
     start: 'where',
@@ -460,7 +463,8 @@ export const GUIDES: Guide[] = [
     title: 'Red LOS light on the ONT',
     summary: 'No fibre signal reaching the ONT. Usually a bend, break or loose connector.',
     category: 'Fibre',
-    icon: faCircleExclamation,
+    icon: WarningCircle,
+    tone: 'rose',
     minutes: 5,
     keywords: 'los red light fibre fiber optical signal ont huawei break bend connector',
     start: 'los-state',
@@ -532,7 +536,8 @@ export const GUIDES: Guide[] = [
     title: 'Wi-Fi missing or won’t connect',
     summary: 'Network name not showing, password refused, or a device won’t join.',
     category: 'Wi-Fi',
-    icon: faWifi,
+    icon: WifiSlash,
+    tone: 'teal',
     minutes: 5,
     keywords: 'wifi wi-fi wireless ssid network name not showing cant connect password incorrect',
     start: 'what',
@@ -608,7 +613,8 @@ export const GUIDES: Guide[] = [
     title: 'Some websites won’t load',
     summary: 'Internet partly works, or browsers say “server not found”.',
     category: 'Connection',
-    icon: faLink,
+    icon: LinkSimple,
+    tone: 'green',
     minutes: 5,
     keywords: 'dns websites not loading server not found some sites browser nslookup flushdns',
     start: 'compare',
@@ -674,7 +680,8 @@ export const GUIDES: Guide[] = [
     title: 'No lights on the ONT',
     summary: 'The fibre box is completely dark.',
     category: 'Power',
-    icon: faPlug,
+    icon: Plug,
+    tone: 'gold',
     minutes: 3,
     keywords: 'no power dead ont no lights adapter socket',
     start: 'socket',
@@ -711,7 +718,8 @@ export const GUIDES: Guide[] = [
     title: 'Forgotten Wi-Fi password',
     summary: 'Find the password on a connected device, or set a new one.',
     category: 'Wi-Fi',
-    icon: faKey,
+    icon: Password,
+    tone: 'slate',
     minutes: 3,
     keywords: 'wifi password forgot forgotten key change reset',
     start: 'connected-device',

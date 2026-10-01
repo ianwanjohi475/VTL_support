@@ -5,6 +5,8 @@ import { Layout } from './components/Layout'
 import { PlatformProvider } from './platform'
 import { Home } from './pages/Home'
 import { Guide } from './pages/Guide'
+import { Incidents, IncidentDetail } from './pages/Incidents'
+import { Router } from './pages/Router'
 import { Commands } from './pages/Commands'
 import { Lights } from './pages/Lights'
 import './styles.css'
@@ -27,6 +29,9 @@ createRoot(document.getElementById('root')!).render(
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/guides/:slug" element={<Guide />} />
+            <Route path="/incidents" element={<Incidents />} />
+            <Route path="/incidents/:slug" element={<IncidentDetail />} />
+            <Route path="/router" element={<Router />} />
             <Route path="/commands" element={<Commands />} />
             <Route path="/lights" element={<Lights />} />
             <Route path="*" element={<Navigate to="/" replace />} />

@@ -1,68 +1,49 @@
-import { useState } from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCheck, faCopy } from '@fortawesome/free-solid-svg-icons'
-import { faApple, faWindows } from '@fortawesome/free-brands-svg-icons'
+import { AppleLogo, WindowsLogo } from '@phosphor-icons/react'
 import type { Command } from '../data/guides'
-import { copyText, usePlatform, type Platform } from '../platform'
+import { usePlatform, type Platform } from '../platform'
+import { CopyButton } from './ui'
 
 export function PlatformSwitch() {
   const [platform, setPlatform] = usePlatform()
-  const opts: { id: Platform; label: string; icon: typeof faWindows }[] = [
-    { id: 'windows', label: 'Windows', icon: faWindows },
-    { id: 'mac', label: 'macOS', icon: faApple },
+  const opts: { id: Platform; label: string; Icon: typeof WindowsLogo }[] = [
+    { id: 'windows', label: 'Windows', Icon: WindowsLogo },
+    { id: 'mac', label: 'macOS', Icon: AppleLogo },
   ]
   return (
     <div className="segmented" role="radiogroup" aria-label="Client’s computer">
-      {opts.map(o => (
+      {opts.map(({ id, label, Icon }) => (
         <button
-          key={o.id}
+          key={id}
           type="button"
           role="radio"
-          aria-checked={platform === o.id}
-          className={platform === o.id ? 'active' : undefined}
-          onClick={() => setPlatform(o.id)}
+          aria-checked={platform === id}
+          className={platform === id ? 'active' : undefined}
+          onClick={() => setPlatform(id)}
         >
-          <FontAwesomeIcon icon={o.icon} />{o.label}
+          <Icon size={16} weight="fill" />{label}
         </button>
       ))}
     </div>
   )
 }
 
-export function CopyButton({ text, label = 'Copy' }: { text: string; label?: string }) {
-  const [done, setDone] = useState(false)
-  return (
-    <button
-      type="button"
-      className={done ? 'copy-btn done' : 'copy-btn'}
-      onClick={async () => {
-        if (await copyText(text)) {
-          setDone(true)
-          setTimeout(() => setDone(false), 1600)
-        }
-      }}
-    >
-      <FontAwesomeIcon icon={done ? faCheck : faCopy} />
-      {done ? 'Copied' : label}
-    </button>
-  )
-}
-
 export function CodeBlock({ command }: { command: Command }) {
   const [platform] = usePlatform()
   const code = platform === 'mac' ? command.mac : command.win
+  const OsIcon = platform === 'mac' ? AppleLogo : WindowsLogo
 
   return (
     <div className="code">
       <div className="code-head">
+        <span className="code-dots" aria-hidden><i /><i /><i /></span>
         <span className="code-label">
-          <FontAwesomeIcon icon={platform === 'mac' ? faApple : faWindows} />
+          <OsIcon size={14} weight="fill" />
           {command.label ?? (platform === 'mac' ? 'Terminal' : 'Command Prompt')}
         </span>
         {code && <CopyButton text={code} />}
       </div>
       {code
-        ? <pre><code>{code}</code></pre>
+        ? <pre><code><span className="prompt" aria-hidden>{platform === 'mac' ? '$' : '>'}</span>{code}</code></pre>
         : <p className="code-note">{command.macNote}</p>}
     </div>
   )

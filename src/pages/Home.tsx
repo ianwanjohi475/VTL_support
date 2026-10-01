@@ -1,26 +1,41 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowRight, faChevronRight, faLightbulb, faMagnifyingGlass, faTerminal } from '@fortawesome/free-solid-svg-icons'
+import { ArrowRight, CaretRight, Lightbulb, MagnifyingGlass, Siren, Terminal, Wrench } from '@phosphor-icons/react'
 import { GUIDES } from '../data/guides'
 import { ALL_COMMANDS } from '../data/commands'
+import { INCIDENTS } from '../data/incidents'
+import { ROUTER_TASKS } from '../data/router'
+import { Caption, CopyButton, SeverityBadge, Tile } from '../components/ui'
 
 const words = (q: string) => q.toLowerCase().split(/\s+/).filter(Boolean)
 const hit = (hay: string, q: string) => words(q).every(w => hay.toLowerCase().includes(w))
+
+const POPULAR = ['no-internet', 'slow', 'router-frozen', 'red-los']
+const ADDRESSES: [string, string][] = [
+  ['Router (Tenda)', '192.168.0.1'],
+  ['ONT (Huawei)', '192.168.100.1'],
+  ['Primary DNS', '8.8.8.8'],
+  ['Secondary DNS', '1.1.1.1'],
+]
 
 export function Home() {
   const [query, setQuery] = useState('')
   const inputRef = useRef<HTMLInputElement>(null)
   const q = query.trim()
 
-  const guideHits = useMemo(
-    () => (q ? GUIDES.filter(g => hit(`${g.title} ${g.summary} ${g.category} ${g.keywords}`, q)) : []),
-    [q],
-  )
-  const commandHits = useMemo(
-    () => (q ? ALL_COMMANDS.filter(c => hit(`${c.title} ${c.purpose} ${c.win} ${c.mac ?? ''}`, q)) : []),
-    [q],
-  )
+  const results = useMemo(() => {
+    if (!q) return []
+    return [
+      ...GUIDES.filter(g => hit(`${g.title} ${g.summary} ${g.category} ${g.keywords}`, q))
+        .map(g => ({ key: g.slug, to: `/guides/${g.slug}`, title: g.title, sub: g.summary, kind: 'Guide', icon: g.icon, tone: g.tone })),
+      ...INCIDENTS.filter(i => hit(`${i.title} ${i.short} incident outage`, q))
+        .map(i => ({ key: i.slug, to: `/incidents/${i.slug}`, title: i.title, sub: i.short, kind: 'Incident', icon: i.icon, tone: i.tone })),
+      ...ROUTER_TASKS.filter(t => hit(`${t.title} ${t.summary} router settings`, q))
+        .map(t => ({ key: t.slug, to: `/router#${t.slug}`, title: t.title, sub: t.summary, kind: 'Router', icon: t.icon, tone: t.tone })),
+      ...ALL_COMMANDS.filter(c => hit(`${c.title} ${c.purpose} ${c.win} ${c.mac ?? ''}`, q))
+        .map(c => ({ key: c.id, to: `/commands#${c.id}`, title: c.title, sub: c.win.split('\n')[0], kind: 'Command', icon: Terminal, tone: 'slate' as const })),
+    ]
+  }, [q])
 
   // "/" jumps to the search box.
   useEffect(() => {
@@ -38,56 +53,49 @@ export function Home() {
   return (
     <div className="page">
       <section className="hero">
-        <span className="comic">VTL Support Toolkit</span>
+        <Caption>VTL Support Toolkit</Caption>
         <h1>What is the client experiencing?</h1>
-        <p>Pick the symptom and follow the steps with the client. Each guide adapts to their answers.</p>
+        <p>Pick the symptom and follow the steps with the client. Every guide adapts to their answers.</p>
         <label className="search">
-          <FontAwesomeIcon icon={faMagnifyingGlass} className="search-icon" />
-          <span className="sr-only">Search guides and commands</span>
+          <MagnifyingGlass size={20} weight="bold" className="search-icon" />
+          <span className="sr-only">Search guides, incidents, router tasks and commands</span>
           <input
             ref={inputRef}
             type="search"
-            autoFocus
             autoComplete="off"
-            placeholder="Search symptoms or commands…"
+            placeholder="Search symptoms, incidents or commands…"
             value={query}
             onChange={e => setQuery(e.target.value)}
             onKeyDown={e => { if (e.key === 'Escape') setQuery('') }}
           />
           <kbd className="kbd" aria-hidden>/</kbd>
         </label>
+        <div className="chips">
+          <span className="chips-label">Popular:</span>
+          {POPULAR.map(slug => {
+            const g = GUIDES.find(x => x.slug === slug)!
+            return <Link key={slug} to={`/guides/${slug}`} className="chip">{g.title}</Link>
+          })}
+        </div>
       </section>
 
       {q ? (
         <section className="section" aria-live="polite">
-          <div className="section-head"><h2>Results for “{q}”</h2></div>
-          {guideHits.length + commandHits.length === 0 ? (
-            <p className="empty">No matches. Try a simpler word like “wifi”, “slow” or “light”.</p>
+          <div className="section-head"><Caption>Results</Caption><span className="muted">{results.length} for “{q}”</span></div>
+          {results.length === 0 ? (
+            <div className="card empty">No matches. Try a simpler word like “wifi”, “slow”, “LOS” or “ping”.</div>
           ) : (
-            <ul className="result-list">
-              {guideHits.map(g => (
-                <li key={g.slug}>
-                  <Link to={`/guides/${g.slug}`} className="result">
-                    <span className="result-icon"><FontAwesomeIcon icon={g.icon} /></span>
-                    <span className="result-text">
-                      <span className="result-title">{g.title}</span>
-                      <span className="result-sub">{g.summary}</span>
+            <ul className="card list">
+              {results.map(r => (
+                <li key={r.kind + r.key}>
+                  <Link to={r.to} className="row">
+                    <Tile icon={r.icon} tone={r.tone} size="sm" />
+                    <span className="row-text">
+                      <span className="row-title">{r.title}</span>
+                      <span className="row-sub">{r.sub}</span>
                     </span>
-                    <span className="badge">Guide</span>
-                    <FontAwesomeIcon icon={faChevronRight} className="chev" />
-                  </Link>
-                </li>
-              ))}
-              {commandHits.map(c => (
-                <li key={c.id}>
-                  <Link to={`/commands#${c.id}`} className="result">
-                    <span className="result-icon"><FontAwesomeIcon icon={faTerminal} /></span>
-                    <span className="result-text">
-                      <span className="result-title">{c.title}</span>
-                      <span className="result-sub mono">{c.win.split('\n')[0]}</span>
-                    </span>
-                    <span className="badge">Command</span>
-                    <FontAwesomeIcon icon={faChevronRight} className="chev" />
+                    <span className="pill">{r.kind}</span>
+                    <CaretRight size={16} weight="bold" className="chev" />
                   </Link>
                 </li>
               ))}
@@ -98,17 +106,17 @@ export function Home() {
         <>
           <section className="section">
             <div className="section-head">
-              <h2>Troubleshooting guides</h2>
-              <span className="muted">{GUIDES.length} guides</span>
+              <Caption>Troubleshooting guides</Caption>
+              <span className="muted">{GUIDES.length} step-by-step guides</span>
             </div>
             <div className="guide-grid">
               {GUIDES.map(g => (
-                <Link key={g.slug} to={`/guides/${g.slug}`} className="guide-card">
-                  <span className="guide-icon"><FontAwesomeIcon icon={g.icon} /></span>
+                <Link key={g.slug} to={`/guides/${g.slug}`} className={`card guide-card tone-${g.tone}`}>
+                  <Tile icon={g.icon} tone={g.tone} />
                   <span className="guide-title">{g.title}</span>
                   <span className="guide-summary">{g.summary}</span>
                   <span className="guide-foot">
-                    <span className="badge">{g.category}</span>
+                    <span className="pill tone-pill">{g.category}</span>
                     <span className="muted">~{g.minutes} min</span>
                   </span>
                 </Link>
@@ -116,26 +124,66 @@ export function Home() {
             </div>
           </section>
 
-          <section className="section">
-            <div className="section-head"><h2>Reference</h2></div>
-            <div className="tool-grid">
-              <Link to="/commands" className="tool-card">
-                <span className="tool-icon"><FontAwesomeIcon icon={faTerminal} /></span>
-                <span className="tool-text">
-                  <span className="tool-title">Network commands</span>
-                  <span className="tool-sub">Ping, traceroute, IP renew, DNS flush, Wi-Fi signal. Windows and macOS, with how to read the results.</span>
-                </span>
-                <FontAwesomeIcon icon={faArrowRight} className="chev" />
-              </Link>
-              <Link to="/lights" className="tool-card">
-                <span className="tool-icon"><FontAwesomeIcon icon={faLightbulb} /></span>
-                <span className="tool-text">
-                  <span className="tool-title">Light guide</span>
-                  <span className="tool-sub">What every light on the Huawei ONT and Tenda router means, and what to do next.</span>
-                </span>
-                <FontAwesomeIcon icon={faArrowRight} className="chev" />
-              </Link>
-            </div>
+          <section className="section widgets">
+            <article className="card widget">
+              <header className="widget-head">
+                <span className="widget-title"><Siren size={20} weight="duotone" />Incident response</span>
+                <Link to="/incidents" className="widget-link">All<ArrowRight size={14} weight="bold" /></Link>
+              </header>
+              <ul className="widget-list">
+                {INCIDENTS.map(i => (
+                  <li key={i.slug}>
+                    <Link to={`/incidents/${i.slug}`} className="row compact">
+                      <Tile icon={i.icon} tone={i.tone} size="sm" />
+                      <span className="row-text">
+                        <span className="row-title">{i.title}</span>
+                        <span className="row-sub">Respond in {i.respond}</span>
+                      </span>
+                      <SeverityBadge severity={i.severity} />
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </article>
+
+            <article className="card widget">
+              <header className="widget-head">
+                <span className="widget-title"><Wrench size={20} weight="duotone" />Router setup</span>
+                <Link to="/router" className="widget-link">All<ArrowRight size={14} weight="bold" /></Link>
+              </header>
+              <ul className="widget-list">
+                {ROUTER_TASKS.filter(t => ['pppoe', 'wifi-name', 'channel', 'reset'].includes(t.slug)).map(t => (
+                  <li key={t.slug}>
+                    <Link to={`/router#${t.slug}`} className="row compact">
+                      <Tile icon={t.icon} tone={t.tone} size="sm" />
+                      <span className="row-text">
+                        <span className="row-title">{t.title}</span>
+                        <span className="row-sub">{t.summary}</span>
+                      </span>
+                      <CaretRight size={16} weight="bold" className="chev" />
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </article>
+
+            <article className="card widget">
+              <header className="widget-head">
+                <span className="widget-title"><Terminal size={20} weight="duotone" />Quick reference</span>
+              </header>
+              <dl className="addr-list">
+                {ADDRESSES.map(([label, value]) => (
+                  <div key={label} className="addr">
+                    <dt>{label}</dt>
+                    <dd><code>{value}</code><CopyButton text={value} label="" /></dd>
+                  </div>
+                ))}
+              </dl>
+              <div className="widget-actions">
+                <Link to="/commands" className="btn btn-soft"><Terminal size={17} weight="duotone" />Commands</Link>
+                <Link to="/lights" className="btn btn-soft"><Lightbulb size={17} weight="duotone" />Light guide</Link>
+              </div>
+            </article>
           </section>
         </>
       )}
