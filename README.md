@@ -1,25 +1,41 @@
-# CODING AGENTS: READ THIS FIRST
+# VTL Telecom Support Toolkit
 
-This is a **handoff bundle**.
+A troubleshooting assistant for VTL Telecom support agents. Pick the client's
+symptom and the guide walks you through the fix one step at a time, branching
+on what the client reports.
 
-A user mocked up designs in HTML/CSS/JS using an AI design tool, then exported this bundle so a coding agent can implement the designs for real.
+## What's in it
 
-## What you should do — IMPORTANT
+- **8 troubleshooting guides:** no internet, router frozen, slow or dropping
+  connection, red LOS light, Wi-Fi problems, websites not loading, no lights
+  on the ONT, forgotten Wi-Fi password. Each step offers answers that lead to the
+  next step, to another guide, or to an outcome: resolved, client-side, or
+  escalate (with a checklist of what to record).
+- **Copy notes:** every guide keeps a list of steps taken and answers, ready to
+  paste into the ticket.
+- **Network commands:** ping, packet-loss test, traceroute, IP renew, DNS
+  flush, nslookup and Wi-Fi signal, for Windows and macOS, with how to read the
+  results.
+- **Light guide:** what each light on the Huawei ONT and Tenda router means,
+  linked to the matching guide.
+- Light and dark mode, and a layout for desktop, tablet and phone.
 
-**Read the chat transcripts first.** There are 1 chat transcript(s) in `chats/`. The transcripts show the full back-and-forth between the user and the design assistant — they tell you **what the user actually wants** and **where they landed** after iterating. Don't skip them. The final HTML files are the output, but the chat is where the intent lives.
+## Running it
 
-**Read `project/VTLsupport.dc.html` in full.** The user had this file open when they triggered the handoff, so it's almost certainly the primary design they want built. Read it top to bottom — don't skim. Then **follow its imports**: open every file it pulls in (shared components, CSS, scripts) so you understand how the pieces fit together before you start implementing.
+```sh
+npm install
+npm run dev      # local development server
+npm run build    # production build in dist/
+```
 
-**If anything is ambiguous, ask the user to confirm before you start implementing.** It's much cheaper to clarify scope up front than to build the wrong thing.
+## Editing the content
 
-## About the design files
+All the content lives in `src/data/`:
 
-The design medium is **HTML/CSS/JS** — these are prototypes, not production code. Your job is to **recreate them pixel-perfectly** in whatever technology makes sense for the target codebase (React, Vue, native, whatever fits). Match the visual output; don't copy the prototype's internal structure unless it happens to fit.
+- `guides.ts`: the guides. Each guide is a set of `step` and `outcome` nodes;
+  a step's options point to the next node (`next`) or to another guide
+  (`guide`, optionally with `step`).
+- `commands.ts`: the network commands page.
+- `lights.ts`: the light guide tables.
 
-**Don't render these files in a browser or take screenshots unless the user asks you to.** Everything you need — dimensions, colors, layout rules — is spelled out in the source. Read the HTML and CSS directly; a screenshot won't tell you anything they don't.
-
-## Bundle contents
-
-- `README.md` — this file
-- `chats/` — conversation transcripts (read these!)
-- `project/` — the `VTLsupport fault resolution prototype` project files (HTML prototypes, assets, components)
+The original design handoff is kept in `project/` and `chats/`.

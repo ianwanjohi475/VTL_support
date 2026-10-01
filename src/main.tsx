@@ -1,18 +1,38 @@
-import { StrictMode } from 'react'
+import { StrictMode, useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom'
+import { Layout } from './components/Layout'
+import { PlatformProvider } from './platform'
 import { Home } from './pages/Home'
-import { FaultDetail } from './pages/FaultDetail'
+import { Guide } from './pages/Guide'
+import { Commands } from './pages/Commands'
+import { Lights } from './pages/Lights'
 import './styles.css'
+
+/** Start each page at the top, unless the URL targets a section. */
+function ScrollReset() {
+  const { pathname, search, hash } = useLocation()
+  useEffect(() => {
+    if (!hash) window.scrollTo(0, 0)
+  }, [pathname, search, hash])
+  return null
+}
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/faults/:slug" element={<FaultDetail />} />
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
+      <PlatformProvider>
+        <ScrollReset />
+        <Layout>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/guides/:slug" element={<Guide />} />
+            <Route path="/commands" element={<Commands />} />
+            <Route path="/lights" element={<Lights />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </Layout>
+      </PlatformProvider>
     </BrowserRouter>
   </StrictMode>,
 )
