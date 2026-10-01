@@ -1,10 +1,10 @@
 import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
-import { Info, Terminal } from '@phosphor-icons/react'
 import { COMMAND_GROUPS } from '../data/commands'
 import { CodeBlock, PlatformSwitch } from '../components/CodeBlock'
 import { usePlatform } from '../platform'
 import { Caption, Tile } from '../components/ui'
+import { Icon, ic } from '../icons'
 
 export function Commands() {
   const [platform] = usePlatform()
@@ -26,7 +26,7 @@ export function Commands() {
       </header>
 
       <div className="banner">
-        <Info size={18} weight="duotone" />
+        <Icon icon={ic.info} size={18} />
         {platform === 'mac'
           ? <span><strong>Open Terminal:</strong> press Cmd + Space, type “Terminal” and press Return.</span>
           : <span><strong>Open Command Prompt:</strong> press the Windows key, type “cmd” and press Enter.</span>}
@@ -38,7 +38,7 @@ export function Commands() {
           <div className="cmd-list">
             {group.items.map(c => (
               <article className="card cmd" id={c.id} key={c.id}>
-                <div className="cmd-head"><Tile icon={Terminal} tone="slate" size="sm" /><h3>{c.title}</h3></div>
+                <div className="cmd-head"><Tile icon={ic.terminal} tone="slate" size="sm" /><h3>{c.title}</h3></div>
                 <p className="muted">{c.purpose}</p>
                 <CodeBlock command={{ ...c, label: undefined }} />
                 <ul className="cmd-read">{c.read.map(r => <li key={r}>{r}</li>)}</ul>

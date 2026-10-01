@@ -1,5 +1,4 @@
-import type { Icon } from '@phosphor-icons/react'
-import { ArrowsClockwise, CellTower, CloudSlash, WarningCircle } from '@phosphor-icons/react'
+import { ic, type IconData } from '../icons'
 import type { Tone } from './tones'
 
 export type Severity = 'Critical' | 'High' | 'Medium'
@@ -14,7 +13,7 @@ export interface Incident {
   slug: string
   title: string
   short: string
-  icon: Icon
+  icon: IconData
   tone: Tone
   severity: Severity
   /** Response and restore targets. Defaults: set these to VTL’s SLA. */
@@ -34,7 +33,7 @@ export const INCIDENTS: Incident[] = [
     slug: 'client-offline',
     title: 'Client offline',
     short: 'A single client has no internet.',
-    icon: CloudSlash,
+    icon: ic.cloudOff,
     tone: 'blue',
     severity: 'Medium',
     respond: '15 min',
@@ -78,7 +77,7 @@ export const INCIDENTS: Incident[] = [
     slug: 'los',
     title: 'LOS alarm (fibre signal lost)',
     short: 'The ONT reports loss of optical signal.',
-    icon: WarningCircle,
+    icon: ic.signalDisconnected,
     tone: 'rose',
     severity: 'High',
     respond: '10 min',
@@ -120,7 +119,7 @@ export const INCIDENTS: Incident[] = [
     slug: 'router-freeze',
     title: 'Router freeze',
     short: 'The router hangs and stops passing traffic.',
-    icon: ArrowsClockwise,
+    icon: ic.router,
     tone: 'violet',
     severity: 'Medium',
     respond: '15 min',
@@ -158,7 +157,7 @@ export const INCIDENTS: Incident[] = [
     slug: 'area-outage',
     title: 'Area outage',
     short: 'Several clients in one area are down at once.',
-    icon: CellTower,
+    icon: ic.cellTower,
     tone: 'amber',
     severity: 'Critical',
     respond: '5 min',

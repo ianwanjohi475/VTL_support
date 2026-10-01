@@ -1,8 +1,8 @@
 import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
-import { Info, Lightbulb, Warning } from '@phosphor-icons/react'
 import { ROUTER_TASKS } from '../data/router'
 import { Caption, CopyButton, Tile } from '../components/ui'
+import { Icon, ic } from '../icons'
 
 export function Router() {
   const { hash } = useLocation()
@@ -22,7 +22,7 @@ export function Router() {
       </header>
 
       <div className="banner">
-        <Info size={18} weight="duotone" />
+        <Icon icon={ic.info} size={18} />
         <span>All changes start by signing in at <strong>192.168.0.1</strong> from a device connected to the router.</span>
       </div>
 
@@ -68,8 +68,8 @@ export function Router() {
                 )}
               </div>
 
-              {t.warning && <div className="note warn"><Warning size={18} weight="duotone" /><span>{t.warning}</span></div>}
-              {t.tip && <div className="note tip"><Lightbulb size={18} weight="duotone" /><span>{t.tip}</span></div>}
+              {t.warning && <div className="note warn"><Icon icon={ic.warning} size={18} /><span>{t.warning}</span></div>}
+              {t.tip && <div className="note tip"><Icon icon={ic.lightbulb} size={18} /><span>{t.tip}</span></div>}
             </article>
           ))}
         </div>

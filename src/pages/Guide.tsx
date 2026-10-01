@@ -1,18 +1,16 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom'
-import {
-  ArrowCounterClockwise, ArrowLeft, ArrowRight, CaretRight, Check, CheckCircle, Info, User, Warning,
-} from '@phosphor-icons/react'
 import { GUIDE_BY_SLUG, type Guide as GuideT, type OutcomeNode, type Option, type StepNode } from '../data/guides'
 import { CodeBlock, PlatformSwitch } from '../components/CodeBlock'
 import { Caption, CopyButton, Tile } from '../components/ui'
+import { Icon, ic } from '../icons'
 
 interface Taken { node: string; answer: string }
 
 const RESULT_META = {
-  resolved: { label: 'Resolved', Icon: CheckCircle, cls: 'ok' },
-  escalate: { label: 'Escalate', Icon: Warning, cls: 'bad' },
-  client: { label: 'Client-side', Icon: User, cls: 'warn' },
+  resolved: { label: 'Resolved', icon: ic.checkCircle, cls: 'ok' },
+  escalate: { label: 'Escalate', icon: ic.warning, cls: 'bad' },
+  client: { label: 'Client-side', icon: ic.person, cls: 'warn' },
 } as const
 
 function buildNotes(guide: GuideT, taken: Taken[], outcome: OutcomeNode | null) {
@@ -65,7 +63,7 @@ function Runner({ guide, startAt, from }: { guide: GuideT; startAt: string; from
       <div className="guide-main">
         {from && (
           <div className="banner">
-            <Info size={18} weight="duotone" />
+            <Icon icon={ic.info} size={18} />
             <span>Continued from <Link to={`/guides/${from.slug}`}>{from.title}</Link></span>
           </div>
         )}
@@ -83,7 +81,7 @@ function Runner({ guide, startAt, from }: { guide: GuideT; startAt: string; from
             {node.commands?.map(c => <CodeBlock key={c.win} command={c} />)}
             {node.lookFor && (
               <div className="callout">
-                <div className="callout-title"><Info size={16} weight="duotone" />What to look for</div>
+                <div className="callout-title"><Icon icon={ic.info} size={16} />What to look for</div>
                 <ul>{node.lookFor.map(l => <li key={l}>{l}</li>)}</ul>
               </div>
             )}
@@ -94,15 +92,15 @@ function Runner({ guide, startAt, from }: { guide: GuideT; startAt: string; from
                 <button key={o.label} type="button" className="option" onClick={() => choose(o)}>
                   <span>{o.label}</span>
                   {o.guide
-                    ? <span className="option-jump">Opens “{GUIDE_BY_SLUG[o.guide].title}”<ArrowRight size={14} weight="bold" /></span>
-                    : <CaretRight size={16} weight="bold" className="chev" />}
+                    ? <span className="option-jump">Opens “{GUIDE_BY_SLUG[o.guide].title}”<Icon icon={ic.arrowForward} size={14} /></span>
+                    : <Icon icon={ic.chevronRight} size={16} className="chev" />}
                 </button>
               ))}
             </div>
 
             {taken.length > 0 && (
               <button type="button" className="btn btn-ghost back-btn" onClick={back}>
-                <ArrowLeft size={16} weight="bold" />Previous step
+                <Icon icon={ic.arrowBack} size={16} />Previous step
               </button>
             )}
           </section>
@@ -123,7 +121,7 @@ function Runner({ guide, startAt, from }: { guide: GuideT; startAt: string; from
             <ol className="trail">
               {taken.map((t, i) => (
                 <li key={`${t.node}-${i}`}>
-                  <span className="trail-dot"><Check size={12} weight="bold" /></span>
+                  <span className="trail-dot"><Icon icon={ic.check} size={12} /></span>
                   <span className="trail-text">
                     <span className="trail-step">{(guide.nodes[t.node] as StepNode).title}</span>
                     <span className="trail-answer">{t.answer}</span>
@@ -134,7 +132,7 @@ function Runner({ guide, startAt, from }: { guide: GuideT; startAt: string; from
           )}
           {taken.length > 0 && (
             <button type="button" className="link-btn" onClick={restart}>
-              <ArrowCounterClockwise size={15} weight="bold" />Start over
+              <Icon icon={ic.restart} size={15} />Start over
             </button>
           )}
         </section>
@@ -147,24 +145,24 @@ function OutcomeCard({ node, notes, onBack, onRestart }: { node: OutcomeNode; no
   const meta = RESULT_META[node.result]
   return (
     <section className={`card outcome ${meta.cls}`} aria-live="polite">
-      <div className="outcome-badge"><meta.Icon size={18} weight="fill" />{meta.label}</div>
+      <div className="outcome-badge"><Icon icon={meta.icon} size={19} />{meta.label}</div>
       <h2 className="step-title">{node.title}</h2>
       <div className="step-body">
         {node.body.map(p => <p key={p}>{p}</p>)}
       </div>
       {node.checklist && (
         <div className="callout">
-          <div className="callout-title"><Warning size={16} weight="duotone" />Record before escalating</div>
+          <div className="callout-title"><Icon icon={ic.warning} size={16} />Record before escalating</div>
           <ul>{node.checklist.map(l => <li key={l}>{l}</li>)}</ul>
         </div>
       )}
       <div className="outcome-actions">
         <CopyButton text={notes} label="Copy notes for the ticket" variant="primary" />
         <button type="button" className="btn btn-ghost" onClick={onBack}>
-          <ArrowLeft size={16} weight="bold" />Previous step
+          <Icon icon={ic.arrowBack} size={16} />Previous step
         </button>
         <button type="button" className="btn btn-ghost" onClick={onRestart}>
-          <ArrowCounterClockwise size={16} weight="bold" />Start over
+          <Icon icon={ic.restart} size={16} />Start over
         </button>
       </div>
     </section>
@@ -196,7 +194,7 @@ export function Guide() {
 
   return (
     <div className="page">
-      <Link to="/" className="back-link"><ArrowLeft size={16} weight="bold" />All guides</Link>
+      <Link to="/" className="back-link"><Icon icon={ic.arrowBack} size={16} />All guides</Link>
       <header className="detail-head">
         <Tile icon={guide.icon} tone={guide.tone} size="lg" />
         <div>

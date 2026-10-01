@@ -1,16 +1,15 @@
 import { useState, type ReactNode } from 'react'
-import type { Icon } from '@phosphor-icons/react'
-import { Check, Copy } from '@phosphor-icons/react'
 import type { Tone } from '../data/tones'
 import type { Severity } from '../data/incidents'
 import { copyText } from '../platform'
+import { Icon, ic, type IconData } from '../icons'
 
-/** A coloured, app-style icon tile with a two-tone glyph. */
-export function Tile({ icon: I, tone, size = 'md' }: { icon: Icon; tone: Tone; size?: 'sm' | 'md' | 'lg' }) {
-  const px = size === 'lg' ? 28 : size === 'sm' ? 18 : 22
+/** An icon on a soft tinted square in its colour family. */
+export function Tile({ icon, tone, size = 'md' }: { icon: IconData; tone: Tone; size?: 'sm' | 'md' | 'lg' }) {
+  const px = size === 'lg' ? 36 : size === 'sm' ? 22 : 29
   return (
     <span className={`tile tile-${size} tone-${tone}`} aria-hidden>
-      <I size={px} weight="duotone" />
+      <Icon icon={icon} size={px} />
     </span>
   )
 }
@@ -39,7 +38,7 @@ export function CopyButton({ text, label = 'Copy', variant }: { text: string; la
         }
       }}
     >
-      {done ? <Check size={15} weight="bold" /> : <Copy size={15} weight="bold" />}
+      {done ? <Icon icon={ic.check} size={15} /> : <Icon icon={ic.contentCopy} size={15} />}
       {label && (done ? 'Copied' : label)}
     </button>
   )

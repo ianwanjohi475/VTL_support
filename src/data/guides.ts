@@ -1,5 +1,4 @@
-import type { Icon } from '@phosphor-icons/react'
-import { ArrowsClockwise, Gauge, Globe, LinkSimple, Password, Plug, WarningCircle, WifiSlash } from '@phosphor-icons/react'
+import { ic, type IconData } from '../icons'
 import type { Tone } from './tones'
 
 /** A command shown with Windows and macOS variants. `mac: null` means there is
@@ -47,7 +46,7 @@ export interface Guide {
   title: string
   summary: string
   category: 'Connection' | 'Router' | 'Speed' | 'Fibre' | 'Wi-Fi' | 'Power'
-  icon: Icon
+  icon: IconData
   tone: Tone
   minutes: number
   keywords: string
@@ -72,7 +71,7 @@ export const GUIDES: Guide[] = [
     title: 'No internet on any device',
     summary: 'Nothing loads on phones, laptops or TVs.',
     category: 'Connection',
-    icon: Globe,
+    icon: ic.publicOff,
     tone: 'blue',
     minutes: 8,
     keywords: 'down offline not working no connection internet ping pppoe',
@@ -235,7 +234,7 @@ export const GUIDES: Guide[] = [
     title: 'Router frozen or not responding',
     summary: 'Wi-Fi visible but nothing works, lights stuck, or settings page won’t open.',
     category: 'Router',
-    icon: ArrowsClockwise,
+    icon: ic.router,
     tone: 'violet',
     minutes: 6,
     keywords: 'freeze freezing hang stuck reboot restart reset tenda router not responding',
@@ -344,7 +343,7 @@ export const GUIDES: Guide[] = [
     title: 'Slow or dropping connection',
     summary: 'Low speeds, buffering, or the connection keeps cutting out.',
     category: 'Speed',
-    icon: Gauge,
+    icon: ic.speed,
     tone: 'amber',
     minutes: 10,
     keywords: 'slow speed lag buffering drops dropping intermittent packet loss latency ping speedtest',
@@ -463,7 +462,7 @@ export const GUIDES: Guide[] = [
     title: 'Red LOS light on the ONT',
     summary: 'No fibre signal reaching the ONT. Usually a bend, break or loose connector.',
     category: 'Fibre',
-    icon: WarningCircle,
+    icon: ic.signalDisconnected,
     tone: 'rose',
     minutes: 5,
     keywords: 'los red light fibre fiber optical signal ont huawei break bend connector',
@@ -536,7 +535,7 @@ export const GUIDES: Guide[] = [
     title: 'Wi-Fi missing or won’t connect',
     summary: 'Network name not showing, password refused, or a device won’t join.',
     category: 'Wi-Fi',
-    icon: WifiSlash,
+    icon: ic.wifiOff,
     tone: 'teal',
     minutes: 5,
     keywords: 'wifi wi-fi wireless ssid network name not showing cant connect password incorrect',
@@ -613,7 +612,7 @@ export const GUIDES: Guide[] = [
     title: 'Some websites won’t load',
     summary: 'Internet partly works, or browsers say “server not found”.',
     category: 'Connection',
-    icon: LinkSimple,
+    icon: ic.dns,
     tone: 'green',
     minutes: 5,
     keywords: 'dns websites not loading server not found some sites browser nslookup flushdns',
@@ -680,7 +679,7 @@ export const GUIDES: Guide[] = [
     title: 'No lights on the ONT',
     summary: 'The fibre box is completely dark.',
     category: 'Power',
-    icon: Plug,
+    icon: ic.powerOff,
     tone: 'gold',
     minutes: 3,
     keywords: 'no power dead ont no lights adapter socket',
@@ -718,7 +717,7 @@ export const GUIDES: Guide[] = [
     title: 'Forgotten Wi-Fi password',
     summary: 'Find the password on a connected device, or set a new one.',
     category: 'Wi-Fi',
-    icon: Password,
+    icon: ic.wifiPassword,
     tone: 'slate',
     minutes: 3,
     keywords: 'wifi password forgot forgotten key change reset',

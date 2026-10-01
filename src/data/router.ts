@@ -1,14 +1,11 @@
-import type { Icon } from '@phosphor-icons/react'
-import {
-  ArrowCounterClockwise, Clock, CloudArrowDown, Globe, LinkSimple, LockKey, SignIn, Sliders, WifiHigh,
-} from '@phosphor-icons/react'
+import { ic, type IconData } from '../icons'
 import type { Tone } from './tones'
 
 export interface RouterTask {
   slug: string
   title: string
   summary: string
-  icon: Icon
+  icon: IconData
   tone: Tone
   /** Menu path in the router’s web page. */
   path?: string
@@ -24,7 +21,7 @@ export const ROUTER_TASKS: RouterTask[] = [
     slug: 'sign-in',
     title: 'Sign in to the router',
     summary: 'Every change starts here.',
-    icon: SignIn,
+    icon: ic.login,
     tone: 'slate',
     steps: [
       'Connect a computer or phone to the router by cable or Wi-Fi.',
@@ -38,7 +35,7 @@ export const ROUTER_TASKS: RouterTask[] = [
     slug: 'pppoe',
     title: 'Set up the internet connection (PPPoE)',
     summary: 'For a new or reset router.',
-    icon: Globe,
+    icon: ic.settingsEthernet,
     tone: 'blue',
     path: 'Internet Settings',
     steps: [
@@ -54,7 +51,7 @@ export const ROUTER_TASKS: RouterTask[] = [
     slug: 'wifi-name',
     title: 'Change the Wi-Fi name and password',
     summary: 'Rename the network or set a new password.',
-    icon: WifiHigh,
+    icon: ic.wifi,
     tone: 'teal',
     path: 'WiFi Settings → WiFi Name & Password',
     steps: [
@@ -70,7 +67,7 @@ export const ROUTER_TASKS: RouterTask[] = [
     slug: 'channel',
     title: 'Change the Wi-Fi channel or band',
     summary: 'Fix interference and slow Wi-Fi.',
-    icon: Sliders,
+    icon: ic.tune,
     tone: 'violet',
     path: 'WiFi Settings → WiFi Channel & Bandwidth',
     steps: [
@@ -85,7 +82,7 @@ export const ROUTER_TASKS: RouterTask[] = [
     slug: 'dns',
     title: 'Set DNS servers',
     summary: 'When websites fail to load by name.',
-    icon: LinkSimple,
+    icon: ic.dns,
     tone: 'green',
     path: 'Internet Settings → DNS',
     steps: [
@@ -100,7 +97,7 @@ export const ROUTER_TASKS: RouterTask[] = [
     slug: 'admin-password',
     title: 'Change the router login password',
     summary: 'Secure the settings page.',
-    icon: LockKey,
+    icon: ic.lock,
     tone: 'gold',
     path: 'System Settings → Login Password',
     steps: [
@@ -114,7 +111,7 @@ export const ROUTER_TASKS: RouterTask[] = [
     slug: 'reboot-schedule',
     title: 'Reboot now or on a schedule',
     summary: 'Helps routers that freeze often.',
-    icon: Clock,
+    icon: ic.schedule,
     tone: 'blue',
     path: 'System Settings → Reboot / Reboot Schedule',
     steps: [
@@ -129,7 +126,7 @@ export const ROUTER_TASKS: RouterTask[] = [
     slug: 'reset',
     title: 'Factory reset and restore',
     summary: 'Last resort for a frozen or locked router.',
-    icon: ArrowCounterClockwise,
+    icon: ic.restart,
     tone: 'rose',
     steps: [
       'Have the PPPoE username and password ready first.',
@@ -143,7 +140,7 @@ export const ROUTER_TASKS: RouterTask[] = [
     slug: 'firmware',
     title: 'Update the firmware',
     summary: 'Fixes bugs that cause freezes and drops.',
-    icon: CloudArrowDown,
+    icon: ic.systemUpdate,
     tone: 'teal',
     path: 'System Settings → Firmware Upgrade',
     steps: [

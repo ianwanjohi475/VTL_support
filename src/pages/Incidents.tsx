@@ -1,12 +1,9 @@
 import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import {
-  ArrowLeft, ArrowRight, ChatText, CheckSquare, Clock, Hourglass, ListChecks, MagnifyingGlass, Megaphone,
-  Square, Users, Warning,
-} from '@phosphor-icons/react'
 import { INCIDENTS, INCIDENT_BY_SLUG, type Incident } from '../data/incidents'
 import { GUIDE_BY_SLUG } from '../data/guides'
 import { Caption, CopyButton, SeverityBadge, Tile } from '../components/ui'
+import { Icon, ic } from '../icons'
 
 export function Incidents() {
   return (
@@ -33,7 +30,7 @@ export function Incidents() {
               <div><dt>Restore</dt><dd>{i.restore}</dd></div>
               <div><dt>Steps</dt><dd>{i.phases.length} phases</dd></div>
             </dl>
-            <span className="card-cta">Open playbook<ArrowRight size={15} weight="bold" /></span>
+            <span className="card-cta">Open playbook<Icon icon={ic.arrowForward} size={15} /></span>
           </Link>
         ))}
       </div>
@@ -58,7 +55,7 @@ function Checklist({ items }: { items: string[] }) {
               className={done[i] ? 'check done' : 'check'}
               onClick={() => setDone(d => d.map((v, j) => (j === i ? !v : v)))}
             >
-              {done[i] ? <CheckSquare size={20} weight="fill" /> : <Square size={20} weight="regular" />}
+              {done[i] ? <Icon icon={ic.checkBox} size={20} /> : <Icon icon={ic.checkBoxBlank} size={20} />}
               <span>{it}</span>
             </button>
           </li>
@@ -84,7 +81,7 @@ export function IncidentDetail() {
 
   return (
     <div className="page">
-      <Link to="/incidents" className="back-link"><ArrowLeft size={16} weight="bold" />All incidents</Link>
+      <Link to="/incidents" className="back-link"><Icon icon={ic.arrowBack} size={16} />All incidents</Link>
       <header className="detail-head">
         <Tile icon={inc.icon} tone={inc.tone} size="lg" />
         <div>
@@ -95,21 +92,21 @@ export function IncidentDetail() {
       </header>
 
       <div className="stat-row">
-        <div className="card stat"><Warning size={22} weight="duotone" /><span className="stat-label">Severity</span><SeverityBadge severity={inc.severity} /></div>
-        <div className="card stat"><Clock size={22} weight="duotone" /><span className="stat-label">Respond within</span><span className="stat-value">{inc.respond}</span></div>
-        <div className="card stat"><Hourglass size={22} weight="duotone" /><span className="stat-label">Restore target</span><span className="stat-value">{inc.restore}</span></div>
-        <div className="card stat wide"><Users size={22} weight="duotone" /><span className="stat-label">Impact</span><span className="stat-text">{inc.impact}</span></div>
+        <div className="card stat"><Icon icon={ic.warning} size={22} /><span className="stat-label">Severity</span><SeverityBadge severity={inc.severity} /></div>
+        <div className="card stat"><Icon icon={ic.schedule} size={22} /><span className="stat-label">Respond within</span><span className="stat-value">{inc.respond}</span></div>
+        <div className="card stat"><Icon icon={ic.hourglass} size={22} /><span className="stat-label">Restore target</span><span className="stat-value">{inc.restore}</span></div>
+        <div className="card stat wide"><Icon icon={ic.groups} size={22} /><span className="stat-label">Impact</span><span className="stat-text">{inc.impact}</span></div>
       </div>
 
       <div className="detail-layout">
         <div className="detail-main">
           <section className="card block">
-            <h2 className="block-title"><MagnifyingGlass size={20} weight="duotone" />How you’ll spot it</h2>
+            <h2 className="block-title"><Icon icon={ic.search} size={20} />How you’ll spot it</h2>
             <ul className="sign-list">{inc.signs.map(s => <li key={s}>{s}</li>)}</ul>
           </section>
 
           <section className="card block">
-            <h2 className="block-title"><ListChecks size={20} weight="duotone" />Response timeline</h2>
+            <h2 className="block-title"><Icon icon={ic.checklist} size={20} />Response timeline</h2>
             <ol className="timeline">
               {inc.phases.map((p, i) => (
                 <li key={p.title}>
@@ -132,12 +129,12 @@ export function IncidentDetail() {
                 <span className="row-sub">Troubleshoot with the client</span>
                 <span className="row-title">{guide.title}</span>
               </span>
-              <ArrowRight size={18} weight="bold" className="chev" />
+              <Icon icon={ic.arrowForward} size={18} className="chev" />
             </Link>
           )}
 
           <section className="card block">
-            <h2 className="block-title"><Megaphone size={20} weight="duotone" />Who to notify</h2>
+            <h2 className="block-title"><Icon icon={ic.campaign} size={20} />Who to notify</h2>
             <ul className="notify">
               {inc.notify.map(n => (
                 <li key={n.who}><span className="notify-who">{n.who}</span><span className="muted">{n.when}</span></li>
@@ -147,14 +144,14 @@ export function IncidentDetail() {
 
           <section className="card block">
             <div className="block-head">
-              <h2 className="block-title"><ChatText size={20} weight="duotone" />Message to the client</h2>
+              <h2 className="block-title"><Icon icon={ic.chat} size={20} />Message to the client</h2>
               <CopyButton text={inc.clientMessage} />
             </div>
             <blockquote className="message">{inc.clientMessage}</blockquote>
           </section>
 
           <section className="card block">
-            <h2 className="block-title"><CheckSquare size={20} weight="duotone" />Before closing</h2>
+            <h2 className="block-title"><Icon icon={ic.checkBox} size={20} />Before closing</h2>
             <Checklist key={inc.slug} items={inc.close} />
           </section>
         </aside>

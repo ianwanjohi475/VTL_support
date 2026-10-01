@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom'
-import { ArrowRight, Lightbulb } from '@phosphor-icons/react'
 import { Caption, Tile } from '../components/ui'
 import { DEVICES, type LightStatus } from '../data/lights'
 import { GUIDE_BY_SLUG } from '../data/guides'
+import { Icon, ic } from '../icons'
 
 const STATUS: Record<LightStatus, string> = { ok: 'Normal', check: 'Check', fault: 'Problem' }
 
@@ -20,7 +20,7 @@ export function Lights() {
       {DEVICES.map(d => (
         <section className="section" key={d.title}>
           <div className="device-head">
-            <Tile icon={Lightbulb} tone={d.title.startsWith('Huawei') ? 'rose' : 'violet'} />
+            <Tile icon={ic.lightbulb} tone={d.title.startsWith('Huawei') ? 'rose' : 'violet'} />
             <div>
               <h2 className="section-title">{d.title}</h2>
               <span className="muted">{d.subtitle}</span>
@@ -40,7 +40,7 @@ export function Lights() {
                     <td className="status-cell"><span className={`status ${s.status}`}><span className="dot" />{STATUS[s.status]}</span></td>
                     <td className="action">
                       {s.guide && s.status !== 'ok' && (
-                        <Link to={`/guides/${s.guide}`}>{GUIDE_BY_SLUG[s.guide].title}<ArrowRight size={14} weight="bold" /></Link>
+                        <Link to={`/guides/${s.guide}`}>{GUIDE_BY_SLUG[s.guide].title}<Icon icon={ic.arrowForward} size={14} /></Link>
                       )}
                     </td>
                   </tr>

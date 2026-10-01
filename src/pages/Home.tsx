@@ -1,11 +1,11 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowRight, CaretRight, Lightbulb, MagnifyingGlass, Siren, Terminal, Wrench } from '@phosphor-icons/react'
 import { GUIDES } from '../data/guides'
 import { ALL_COMMANDS } from '../data/commands'
 import { INCIDENTS } from '../data/incidents'
 import { ROUTER_TASKS } from '../data/router'
 import { Caption, CopyButton, SeverityBadge, Tile } from '../components/ui'
+import { Icon, ic } from '../icons'
 
 const words = (q: string) => q.toLowerCase().split(/\s+/).filter(Boolean)
 const hit = (hay: string, q: string) => words(q).every(w => hay.toLowerCase().includes(w))
@@ -33,7 +33,7 @@ export function Home() {
       ...ROUTER_TASKS.filter(t => hit(`${t.title} ${t.summary} router settings`, q))
         .map(t => ({ key: t.slug, to: `/router#${t.slug}`, title: t.title, sub: t.summary, kind: 'Router', icon: t.icon, tone: t.tone })),
       ...ALL_COMMANDS.filter(c => hit(`${c.title} ${c.purpose} ${c.win} ${c.mac ?? ''}`, q))
-        .map(c => ({ key: c.id, to: `/commands#${c.id}`, title: c.title, sub: c.win.split('\n')[0], kind: 'Command', icon: Terminal, tone: 'slate' as const })),
+        .map(c => ({ key: c.id, to: `/commands#${c.id}`, title: c.title, sub: c.win.split('\n')[0], kind: 'Command', icon: ic.terminal, tone: 'slate' as const })),
     ]
   }, [q])
 
@@ -57,7 +57,7 @@ export function Home() {
         <h1>What is the client experiencing?</h1>
         <p>Pick the symptom and follow the steps with the client. Every guide adapts to their answers.</p>
         <label className="search">
-          <MagnifyingGlass size={20} weight="bold" className="search-icon" />
+          <Icon icon={ic.search} size={20} className="search-icon" />
           <span className="sr-only">Search guides, incidents, router tasks and commands</span>
           <input
             ref={inputRef}
@@ -95,7 +95,7 @@ export function Home() {
                       <span className="row-sub">{r.sub}</span>
                     </span>
                     <span className="pill">{r.kind}</span>
-                    <CaretRight size={16} weight="bold" className="chev" />
+                    <Icon icon={ic.chevronRight} size={16} className="chev" />
                   </Link>
                 </li>
               ))}
@@ -127,8 +127,8 @@ export function Home() {
           <section className="section widgets">
             <article className="card widget">
               <header className="widget-head">
-                <span className="widget-title"><Siren size={20} weight="duotone" />Incident response</span>
-                <Link to="/incidents" className="widget-link">All<ArrowRight size={14} weight="bold" /></Link>
+                <span className="widget-title"><Icon icon={ic.crisisAlert} size={20} />Incident response</span>
+                <Link to="/incidents" className="widget-link">All<Icon icon={ic.arrowForward} size={14} /></Link>
               </header>
               <ul className="widget-list">
                 {INCIDENTS.map(i => (
@@ -148,8 +148,8 @@ export function Home() {
 
             <article className="card widget">
               <header className="widget-head">
-                <span className="widget-title"><Wrench size={20} weight="duotone" />Router setup</span>
-                <Link to="/router" className="widget-link">All<ArrowRight size={14} weight="bold" /></Link>
+                <span className="widget-title"><Icon icon={ic.build} size={20} />Router setup</span>
+                <Link to="/router" className="widget-link">All<Icon icon={ic.arrowForward} size={14} /></Link>
               </header>
               <ul className="widget-list">
                 {ROUTER_TASKS.filter(t => ['pppoe', 'wifi-name', 'channel', 'reset'].includes(t.slug)).map(t => (
@@ -160,7 +160,7 @@ export function Home() {
                         <span className="row-title">{t.title}</span>
                         <span className="row-sub">{t.summary}</span>
                       </span>
-                      <CaretRight size={16} weight="bold" className="chev" />
+                      <Icon icon={ic.chevronRight} size={16} className="chev" />
                     </Link>
                   </li>
                 ))}
@@ -169,7 +169,7 @@ export function Home() {
 
             <article className="card widget">
               <header className="widget-head">
-                <span className="widget-title"><Terminal size={20} weight="duotone" />Quick reference</span>
+                <span className="widget-title"><Icon icon={ic.terminal} size={20} />Quick reference</span>
               </header>
               <dl className="addr-list">
                 {ADDRESSES.map(([label, value]) => (
@@ -180,8 +180,8 @@ export function Home() {
                 ))}
               </dl>
               <div className="widget-actions">
-                <Link to="/commands" className="btn btn-soft"><Terminal size={17} weight="duotone" />Commands</Link>
-                <Link to="/lights" className="btn btn-soft"><Lightbulb size={17} weight="duotone" />Light guide</Link>
+                <Link to="/commands" className="btn btn-soft"><Icon icon={ic.terminal} size={17} />Commands</Link>
+                <Link to="/lights" className="btn btn-soft"><Icon icon={ic.lightbulb} size={17} />Light guide</Link>
               </div>
             </article>
           </section>

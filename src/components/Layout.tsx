@@ -1,16 +1,16 @@
 import type { ReactNode } from 'react'
 import { Link, NavLink } from 'react-router-dom'
-import { Lightbulb, ListChecks, Moon, Siren, Sun, Terminal, Wrench } from '@phosphor-icons/react'
 import { useTheme } from '../theme'
 import logoUrl from '../assets/vtl-logo-compact.png'
 import logoDarkUrl from '../assets/vtl-logo-compact-dark.png'
+import { Icon, ic } from '../icons'
 
 const NAV = [
-  { to: '/', label: 'Guides', Icon: ListChecks, end: true },
-  { to: '/incidents', label: 'Incidents', Icon: Siren },
-  { to: '/router', label: 'Router setup', short: 'Router', Icon: Wrench },
-  { to: '/commands', label: 'Commands', Icon: Terminal },
-  { to: '/lights', label: 'Light guide', short: 'Lights', Icon: Lightbulb },
+  { to: '/', label: 'Guides', icon: ic.checklist, end: true },
+  { to: '/incidents', label: 'Incidents', icon: ic.crisisAlert },
+  { to: '/router', label: 'Router setup', short: 'Router', icon: ic.router },
+  { to: '/commands', label: 'Commands', icon: ic.terminal },
+  { to: '/lights', label: 'Light guide', short: 'Lights', icon: ic.lightbulb },
 ]
 
 export function Layout({ children }: { children: ReactNode }) {
@@ -26,9 +26,9 @@ export function Layout({ children }: { children: ReactNode }) {
             <span className="brand-name">Support Toolkit</span>
           </Link>
           <nav className="nav" aria-label="Main">
-            {NAV.map(({ to, label, Icon, end }) => (
+            {NAV.map(({ to, label, icon, end }) => (
               <NavLink key={to} to={to} end={end} className="nav-link">
-                <Icon size={18} weight="duotone" className="nav-icon" />{label}
+                <Icon icon={icon} size={19} className="nav-icon" />{label}
               </NavLink>
             ))}
           </nav>
@@ -39,7 +39,7 @@ export function Layout({ children }: { children: ReactNode }) {
             aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
             title={theme === 'dark' ? 'Light mode' : 'Dark mode'}
           >
-            {theme === 'dark' ? <Sun size={19} weight="duotone" /> : <Moon size={19} weight="duotone" />}
+            {theme === 'dark' ? <Icon icon={ic.lightMode} size={19} /> : <Icon icon={ic.darkMode} size={19} />}
           </button>
         </div>
       </header>
@@ -52,9 +52,9 @@ export function Layout({ children }: { children: ReactNode }) {
       </footer>
 
       <nav className="tabbar" aria-label="Main">
-        {NAV.map(({ to, label, short, Icon, end }) => (
+        {NAV.map(({ to, label, short, icon, end }) => (
           <NavLink key={to} to={to} end={end} className="tab">
-            <Icon size={22} weight="duotone" />
+            <Icon icon={icon} size={24} />
             {short ?? label}
           </NavLink>
         ))}
