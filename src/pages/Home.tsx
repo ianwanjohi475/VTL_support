@@ -38,6 +38,7 @@ export function Home() {
   return (
     <div className="page">
       <section className="hero">
+        <span className="comic">VTL Support Toolkit</span>
         <h1>What is the client experiencing?</h1>
         <p>Pick the symptom and follow the steps with the client. Each guide adapts to their answers.</p>
         <label className="search">

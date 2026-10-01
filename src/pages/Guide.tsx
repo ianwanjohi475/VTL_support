@@ -73,7 +73,7 @@ function Runner({ guide, startAt, from }: { guide: GuideT; startAt: string; from
         {node.kind === 'step' ? (
           <section className="panel step" aria-live="polite">
             <div className="step-top">
-              <span className="step-num">Step {stepNumber}</span>
+              <span className="comic">Step {stepNumber}</span>
               {node.commands && <PlatformSwitch />}
             </div>
             <h2 className="step-title">{node.title}</h2>
@@ -193,6 +193,7 @@ export function Guide() {
       <header className="guide-head">
         <span className="guide-icon lg"><FontAwesomeIcon icon={guide.icon} /></span>
         <div>
+          <span className="guide-cat">{guide.category} · ~{guide.minutes} min</span>
           <h1>{guide.title}</h1>
           <p>{guide.summary}</p>
         </div>

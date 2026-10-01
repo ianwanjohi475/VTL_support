@@ -11,6 +11,7 @@ export function Lights() {
     <div className="page">
       <header className="page-head">
         <div>
+          <span className="comic">Reference</span>
           <h1>Light guide</h1>
           <p>Ask the client to read the lights from top to bottom, then match them here.</p>
         </div>

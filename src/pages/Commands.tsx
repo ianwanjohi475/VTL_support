@@ -18,6 +18,7 @@ export function Commands() {
     <div className="page">
       <header className="page-head">
         <div>
+          <span className="comic">Reference</span>
           <h1>Network commands</h1>
           <p>Have the client run these and read you the result.</p>
         </div>
