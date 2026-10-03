@@ -5,10 +5,9 @@ import { Icon, ic } from '../../icons'
 import { CopyButton } from '../../components/ui'
 
 const COMMANDS = [
-  { cmd: 'ping 192.168.0.1', title: 'Ping the router', why: 'Checks the computer reaches the Tenda router over Wi-Fi or cable.' },
-  { cmd: 'ping 8.8.8.8 -n 50', title: 'Packet-loss test (50 pings)', why: 'Sends 50 pings to the internet and counts how many are lost.' },
-  { cmd: 'ping 8.8.8.8 -t', title: 'Continuous ping', why: 'Keeps pinging so you can watch for drops while the client browses. Stop with Ctrl+C.' },
-  { cmd: 'ping google.com', title: 'Ping a website by name', why: 'Also checks DNS. “Could not find host” means name lookup is failing.' },
+  { cmd: 'ping 192.168.0.1', title: 'Ping the router', why: 'Checks the link to the router.' },
+  { cmd: 'ping 8.8.8.8 -n 50', title: 'Packet-loss test (50 pings)', why: 'Counts lost packets to the internet.' },
+  { cmd: 'ping 8.8.8.8 -t', title: 'Continuous ping', why: 'Runs until you press Ctrl+C.' },
 ]
 
 const SCENARIOS: { id: Scenario; label: string }[] = [
@@ -33,7 +32,7 @@ export function TendaPacketLoss() {
       <header className="wt-head">
         <span className="eyebrow tone-amber">Tenda Router · Packet loss</span>
         <h1>Test for packet loss with ping</h1>
-        <p>Open Command Prompt on the client’s computer, type <b>ping</b> followed by an IP address, and read the result.</p>
+        <p>Open Command Prompt, type <b>ping</b> and an IP address, read the loss.</p>
       </header>
 
       <div className="pl">
@@ -42,7 +41,7 @@ export function TendaPacketLoss() {
             <span className="pl-num">1</span>
             <div>
               <h2>Open Command Prompt</h2>
-              <p>Press <kbd className="key">⊞ Win</kbd> + <kbd className="key">R</kbd>, type <b>cmd</b> and press <kbd className="key">Enter</kbd>. Or search “cmd” in the Start menu.</p>
+              <p>Press <kbd className="key">⊞ Win</kbd> + <kbd className="key">R</kbd>, type <b>cmd</b>, press <kbd className="key">Enter</kbd>.</p>
               {!open && <button type="button" className="btn btn-primary" onClick={openCmd}><Icon icon={ic.playArrow} size={20} />Do it for me</button>}
               {open && <p className="pl-ok"><Icon icon={ic.checkCircle} size={18} />Command Prompt is open</p>}
             </div>
@@ -52,7 +51,7 @@ export function TendaPacketLoss() {
             <span className="pl-num">2</span>
             <div>
               <h2>Type ping and an IP address</h2>
-              <p>Type the word <b>ping</b>, a space, then the address, and press Enter. Tap a command to type it in.</p>
+              <p>Tap a command to type it in, or type it yourself.</p>
               <ul className="pl-cmds">
                 {COMMANDS.map(c => (
                   <li key={c.cmd} className={ran.includes(c.cmd) ? 'ran' : undefined}>
@@ -72,13 +71,12 @@ export function TendaPacketLoss() {
             <span className="pl-num">3</span>
             <div>
               <h2>Read the result</h2>
-              <p>Look at the last lines: <code>Lost = x (y% loss)</code>.</p>
+              <p>Look at <code>Lost = x (y% loss)</code>.</p>
               <table className="pl-read">
                 <tbody>
-                  <tr><td><span className="status ok"><span className="dot" />0% loss</span></td><td>Healthy line. Times under ~100 ms to 8.8.8.8 are normal.</td></tr>
-                  <tr><td><span className="status check"><span className="dot" />1–2%</span></td><td>Borderline. Repeat the test; check Wi-Fi signal and cables.</td></tr>
-                  <tr><td><span className="status fault"><span className="dot" />Over 2%</span></td><td>Packet loss. If <b>192.168.0.1</b> is clean but <b>8.8.8.8</b> loses packets, the problem is beyond the router: check the PoE/ONT connection, then escalate with the result.</td></tr>
-                  <tr><td><span className="status fault"><span className="dot" />Timed out</span></td><td>All requests time out to 8.8.8.8 but the router replies: no internet on the line. Check the router Status page and the WAN light.</td></tr>
+                  <tr><td><span className="status ok"><span className="dot" />0% loss</span></td><td>Good line.</td></tr>
+                  <tr><td><span className="status fault"><span className="dot" />Over 2%</span></td><td>Packet loss. Router clean but 8.8.8.8 losing? Check the PoE connection, then escalate.</td></tr>
+                  <tr><td><span className="status fault"><span className="dot" />Timed out</span></td><td>No internet on the line. Check the WAN light.</td></tr>
                 </tbody>
               </table>
             </div>
@@ -109,7 +107,7 @@ export function TendaPacketLoss() {
               <span className="tb-time">18:01</span>
             </div>
           </div>
-          <p className="sim-note">Type commands yourself, or tap one on the left. Switch the line condition to see what packet loss looks like.</p>
+          
         </div>
       </div>
     </div>

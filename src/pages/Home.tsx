@@ -26,7 +26,7 @@ export function Home() {
             <span className="feature-brand"><TendaLogo /></span>
           </span>
           <span className="feature-title">Tenda Router</span>
-          <span className="feature-text">Set up a new router, change the Wi-Fi password, test packet loss and migrate a client, on a working copy of the Tenda interface.</span>
+          <span className="feature-text">Setup, Wi-Fi password, packet loss and migration on the real Tenda screens.</span>
           <span className="feature-list">
             <span>PPPoE setup</span><span>Wi-Fi password</span><span>Packet loss</span><span>Migration</span>
           </span>
@@ -38,9 +38,9 @@ export function Home() {
             <span className="feature-icon"><Icon icon={ic.electrical} size={40} /></span>
           </span>
           <span className="feature-title">PoE Connection</span>
-          <span className="feature-text">How the outside cable, PoE injector and router connect, and how to find the fault when the WAN light is off.</span>
+          <span className="feature-text">Setup and step-by-step fixes when the WAN light is off.</span>
           <span className="feature-list">
-            <span>Wiring diagram</span><span>WAN light check</span><span>Bypass test</span>
+            <span>WAN light check</span><span>Bypass test</span>
           </span>
           <span className="feature-go">Open PoE guide<Icon icon={ic.arrowForward} size={20} /></span>
         </Link>

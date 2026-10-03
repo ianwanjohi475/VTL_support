@@ -59,14 +59,13 @@ export function Walkthrough({ eyebrow, title, intro, steps, index, done, finish,
                   <Icon icon={ic.restart} size={18} />Restart
                 </button>
               </div>
-              <p className="wt-tip"><Icon icon={ic.tips} size={18} />Try it yourself on the phone. The highlighted part is what to tap or fill in next.</p>
             </>
           )}
         </section>
 
         <div className="wt-device">
           {device}
-          <p className="sim-note">Training simulation. Nothing typed here is sent anywhere.</p>
+          <p className="sim-note">Training simulation. Nothing you type is sent anywhere.</p>
         </div>
 
         <ol className="card wt-steps">

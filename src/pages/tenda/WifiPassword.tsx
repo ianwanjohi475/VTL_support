@@ -6,7 +6,7 @@ import { Finish, Walkthrough, isRouterAddress, type WtStep } from '../../sim/Wal
 import { Icon, ic } from '../../icons'
 
 const LOGIN = 'VTL005665'
-const SSID = 'VTL-5665'
+const SSID = 'VTL_NET'
 const OLD = 'Home@2026'
 const NEW = 'Vtl@2026new'
 
@@ -31,17 +31,17 @@ export function TendaWifiPassword() {
   const steps: WtStep[] = [
     {
       title: 'Open 192.168.0.1',
-      text: <p>With the phone connected to the client’s Wi-Fi, open the browser and go to <b>192.168.0.1</b>. The Tenda login page opens.</p>,
+      text: <p>Type <b>192.168.0.1</b> in the browser and tap Go.</p>,
       sample: [['Address', '192.168.0.1']],
     },
     {
       title: 'Log in with the PPPoE username',
-      text: <p>The router login password is the client’s <b>PPPoE username</b>. Type it in <b>Login Password</b> and tap <b>Login</b>.</p>,
+      text: <p>The login password is the <b>PPPoE username</b>. Type it and tap <b>Login</b>.</p>,
       sample: [['Login Password', LOGIN]],
     },
     {
       title: 'Open the menu',
-      text: <p>Tap the <b>menu button</b> (three lines) at the top right of the orange bar.</p>,
+      text: <p>Tap the <b>three lines</b> at the top right.</p>,
     },
     {
       title: 'Go to Wireless Settings',
@@ -49,18 +49,18 @@ export function TendaWifiPassword() {
     },
     {
       title: 'Change the Wi-Fi password',
-      text: <p>Clear the old <b>WiFi Password</b>, type the new one (at least 8 characters) and tap <b>Save</b>. Leave the WiFi name as it is.</p>,
+      text: <p>Type the new <b>WiFi Password</b> (8+ characters) and tap <b>Save</b>.</p>,
       sample: [['New WiFi Password', NEW]],
     },
     {
       title: 'Reconnect with the new password',
-      text: <p>Every device disconnects. Tell the client to tap <b>{SSID}</b> in Wi-Fi settings and enter the <b>new password</b>. Repeat on each device.</p>,
+      text: <p>Tap <b>{SSID}</b> and enter the <b>new password</b>. Repeat on each device.</p>,
       sample: [['Password', s.pass.length >= 8 && s.pass !== OLD ? s.pass : NEW]],
     },
   ]
 
   const login = () => {
-    if (s.login !== LOGIN) return set({ error: 'Incorrect password. Use the client’s PPPoE username.' })
+    if (s.login !== LOGIN) return set({ error: 'Incorrect password.' })
     next()
   }
   const save = () => {
@@ -70,7 +70,7 @@ export function TendaWifiPassword() {
     setTimeout(() => { set({ saved: false }); setI(5) }, 1100)
   }
   const join = () => {
-    if (s.joinPass !== s.pass) return set({ error: 'Incorrect password. Use the new Wi-Fi password.' })
+    if (s.joinPass !== s.pass) return set({ error: 'Incorrect password.' })
     set({ dialog: false }); setDone(true)
   }
 
@@ -90,7 +90,7 @@ export function TendaWifiPassword() {
   if (done) {
     device = (
       <Phone browser={false}>
-        <WifiList networks={[{ ssid: 'Safaricom-Home-21', locked: true, strength: 2 }]} connected={SSID} onPick={() => {}} />
+        <WifiList networks={[]} connected={SSID} onPick={() => {}} />
       </Phone>
     )
   } else if (i === 0) {
@@ -140,7 +140,7 @@ export function TendaWifiPassword() {
     device = (
       <Phone browser={false}>
         <WifiList
-          networks={[{ ssid: SSID, locked: true, strength: 3 }, { ssid: 'Safaricom-Home-21', locked: true, strength: 2 }]}
+          networks={[{ ssid: SSID, locked: true, strength: 3 }]}
           onPick={ssid => ssid === SSID && set({ dialog: true, error: '' })}
           highlight={s.dialog ? undefined : SSID}
         />
@@ -155,7 +155,7 @@ export function TendaWifiPassword() {
     <Walkthrough
       eyebrow="Tenda Router · Wi-Fi"
       title="Change the Wi-Fi password"
-      intro="Log in with the PPPoE username, go to Wireless Settings and set a new password. Then reconnect every device."
+      intro="Six steps. Do them on the phone, or tap Do it for me."
       steps={steps}
       index={i}
       done={done}
@@ -170,8 +170,7 @@ export function TendaWifiPassword() {
             <button type="button" className="btn btn-ghost" onClick={restart}><Icon icon={ic.restart} size={18} />Run again</button>
           </>}
         >
-          <p>The phone is connected to <b>{SSID}</b> with the new password. Ask the client to reconnect their other devices (TV, laptops) the same way.</p>
-          <p className="muted">Note the new Wi-Fi password on the ticket if the client asks you to keep it.</p>
+          <p>Connected to <b>{SSID}</b> with the new password. Reconnect the client’s other devices the same way.</p>
         </Finish>
       }
     />

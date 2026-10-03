@@ -174,72 +174,69 @@ export function TdToast({ children }: { children: ReactNode }) {
   return <div className="td-toast"><Icon icon={ic.checkCircle} size={20} />{children}</div>
 }
 
-/* ───────────── Quick setup (new or reset router) ───────────── */
+/* ───────────── First-time settings page (new or reset router) ───────────── */
 
-export function TendaQuickInternet({ type, user, pass, onChange, onNext, error, hl }: {
-  type: string
-  user: string
-  pass: string
-  onChange: (patch: { type?: string; user?: string; pass?: string }) => void
-  onNext: () => void
+export interface FirstSetup { user: string; pass: string; ssid: string; wifiPass: string }
+
+/** The single page a new Tenda router shows the first time you open 192.168.0.1. */
+export function TendaFirstSetup({ v, onChange, onOk, error, hl }: {
+  v: FirstSetup
+  onChange: (patch: Partial<FirstSetup>) => void
+  onOk: () => void
   error?: string
-  hl?: 'type' | 'user' | 'pass' | 'next'
+  hl?: 'user' | 'pass' | 'ssid' | 'wifiPass' | 'ok'
 }) {
+  const [type, setType] = useState('PPPoE')
+  const [showPass, setShowPass] = useState(false)
+  const [showWifi, setShowWifi] = useState(false)
   return (
-    <div className="td-page td-quick">
-      <div className="td-steps"><span className="on">1 Internet Settings</span><span>2 Wireless Settings</span></div>
-      <div className="td-card td-form">
-        <label className={hl === 'type' ? 'td-field sim-hl' : 'td-field'}>
-          <span className="td-field-label">Internet Connection Type</span>
-          <select className="td-input" value={type} onChange={e => onChange({ type: e.target.value })}>
-            <option>Dynamic IP</option>
-            <option>PPPoE</option>
-            <option>Static IP</option>
-          </select>
+    <div className="tf">
+      <TendaLogo />
+      <div className="tf-panel">
+        <p className="tf-lead">You can enjoy the Internet after completing the settings on this page.</p>
+        <p className="tf-detect">As detected, your connection type is:<span>PPPoE</span></p>
+        <hr />
+        <div className="tf-head"><Icon icon={ic.language} size={58} /><span>Internet<br />Settings</span></div>
+        <span className="tf-label">Connection Type</span>
+        <div className="tf-radios" role="radiogroup">
+          {['PPPoE', 'Dynamic IP', 'Static IP'].map(t => (
+            <label key={t} className="tf-radio">
+              <input type="radio" name="conn" checked={type === t} onChange={() => setType(t)} />
+              <span className="tf-dot" aria-hidden />{t}
+            </label>
+          ))}
+        </div>
+        <p className="tf-hint">Select PPPoE if your Internet connection asks for the user name and password.</p>
+        <label className={hl === 'user' ? 'tf-field sim-hl' : 'tf-field'}>
+          <span className="tf-label">User Name</span>
+          <input value={v.user} onChange={e => onChange({ user: e.target.value })} placeholder="User Name from ISP" autoComplete="off" autoCapitalize="off" spellCheck={false} />
         </label>
-        {type === 'PPPoE' && (
-          <>
-            <TdField label="PPPoE Username" value={user} onChange={v => onChange({ user: v })} hl={hl === 'user'} placeholder="ISP username" />
-            <TdField label="PPPoE Password" value={pass} onChange={v => onChange({ pass: v })} password hl={hl === 'pass'} placeholder="ISP password" />
-          </>
-        )}
+        <label className={hl === 'pass' ? 'tf-field sim-hl' : 'tf-field'}>
+          <span className="tf-label">Password</span>
+          <span className="tf-input-wrap">
+            <input type={showPass ? 'text' : 'password'} value={v.pass} onChange={e => onChange({ pass: e.target.value })} placeholder="Password from ISP" autoComplete="off" />
+            <button type="button" className="tf-eye" onClick={() => setShowPass(x => !x)} aria-label={showPass ? 'Hide password' : 'Show password'}>
+              <Icon icon={showPass ? ic.visibility : ic.visibilityOff} size={20} />
+            </button>
+          </span>
+        </label>
+        <hr />
+        <div className="tf-head"><Icon icon={ic.wifi} size={58} /><span>Wireless<br />Settings</span></div>
+        <label className={hl === 'ssid' ? 'tf-field center sim-hl' : 'tf-field center'}>
+          <span className="tf-label">WiFi Name</span>
+          <input value={v.ssid} onChange={e => onChange({ ssid: e.target.value })} autoComplete="off" autoCapitalize="off" spellCheck={false} />
+        </label>
+        <label className={hl === 'wifiPass' ? 'tf-field center sim-hl' : 'tf-field center'}>
+          <span className="tf-label">WiFi Password</span>
+          <span className="tf-input-wrap">
+            <input type={showWifi ? 'text' : 'password'} value={v.wifiPass} onChange={e => onChange({ wifiPass: e.target.value })} placeholder="WiFi Password" autoComplete="off" />
+            <button type="button" className="tf-eye" onClick={() => setShowWifi(x => !x)} aria-label={showWifi ? 'Hide password' : 'Show password'}>
+              <Icon icon={showWifi ? ic.visibility : ic.visibilityOff} size={20} />
+            </button>
+          </span>
+        </label>
         {error && <p className="td-error">{error}</p>}
-        <button type="button" className={hl === 'next' ? 'td-btn td-btn-block sim-hl' : 'td-btn td-btn-block'} onClick={onNext}>Next</button>
-      </div>
-    </div>
-  )
-}
-
-export function TendaQuickWireless({ ssid, pass, onChange, onNext, error, hl }: {
-  ssid: string
-  pass: string
-  onChange: (patch: { ssid?: string; pass?: string }) => void
-  onNext: () => void
-  error?: string
-  hl?: 'ssid' | 'pass' | 'next'
-}) {
-  return (
-    <div className="td-page td-quick">
-      <div className="td-steps"><span className="done">1 Internet Settings</span><span className="on">2 Wireless Settings</span></div>
-      <div className="td-card td-form">
-        <TdField label="WiFi Name" value={ssid} onChange={v => onChange({ ssid: v })} hl={hl === 'ssid'} placeholder="Name of the new network" />
-        <TdField label="WiFi Password" value={pass} onChange={v => onChange({ pass: v })} password hl={hl === 'pass'} placeholder="8–63 characters" />
-        <p className="td-hint">The WiFi password must be 8–63 characters.</p>
-        {error && <p className="td-error">{error}</p>}
-        <button type="button" className={hl === 'next' ? 'td-btn td-btn-block sim-hl' : 'td-btn td-btn-block'} onClick={onNext}>Next</button>
-      </div>
-    </div>
-  )
-}
-
-export function TendaQuickDone({ ssid, onOk, hl }: { ssid: string; onOk: () => void; hl?: boolean }) {
-  return (
-    <div className="td-page td-quick">
-      <div className="td-card td-done">
-        <Icon icon={ic.checkCircleOutline} size={64} />
-        <h4>Settings completed</h4>
-        <p>The WiFi network has changed. Please connect your phone to <b>{ssid}</b> using the new WiFi password, then visit <b>192.168.0.1</b> again.</p>
-        <button type="button" className={hl ? 'td-btn td-btn-block sim-hl' : 'td-btn td-btn-block'} onClick={onOk}>OK</button>
+        <button type="button" className={hl === 'ok' ? 'tf-ok sim-hl' : 'tf-ok'} onClick={onOk}>OK</button>
       </div>
     </div>
   )

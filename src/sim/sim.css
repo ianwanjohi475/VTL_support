@@ -221,15 +221,6 @@ select.td-input { padding-right: 10px; }
 .td-check input:checked + .td-checkbox { background: #ec6e1f; border-color: #ec6e1f; }
 .td-actions { display: flex; justify-content: center; gap: 12px; margin: 22px 0 8px; }
 .td-actions .td-btn { min-width: 110px; }
-.td-steps { display: flex; gap: 6px; margin: 12px 4px 4px; font-size: 13px; }
-.td-steps span { flex: 1; padding: 8px 6px; border-radius: 4px; background: #e2e2e2; color: #888; text-align: center; }
-.td-steps .on { background: #ec6e1f; color: #fff; }
-.td-steps .done { background: #f6c7a8; color: #8a4a1c; }
-.td-quick .td-card { margin-top: 12px; }
-.td-done { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px; padding: 26px 18px; }
-.td-done svg { color: #1aa31a; }
-.td-done h4 { margin: 0; font-size: 19px; font-weight: 500; color: #333; }
-.td-done p { margin: 0; font-size: 14.5px; line-height: 1.5; }
 .td-prompt { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin: 10px 4px 0; padding: 10px 12px; border: 1px solid #f3c39f; border-radius: 6px; background: #fff6ef; color: #8a4a1c; font-size: 13.5px; }
 .td-prompt svg { color: #ec6e1f; flex-shrink: 0; }
 .td-prompt span { flex: 1; min-width: 150px; }
@@ -362,69 +353,6 @@ select.td-input { padding-right: 10px; }
 .mig-tip h3 svg { color: var(--brand-text); }
 .mig-tip p { font-size: 14px; color: var(--text-2); }
 
-/* ───────── PoE ───────── */
-
-.poe-how { padding: 22px; display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 24px; align-items: center; }
-.poe-diagram { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
-.pd { width: 100%; height: auto; display: block; }
-.pd-tall { display: none; max-width: 380px; margin: 0 auto; }
-.poe-legend { display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: 13px; color: var(--text-2); }
-.poe-legend span { display: inline-flex; align-items: center; gap: 7px; }
-.lg { width: 22px; height: 5px; border-radius: 3px; display: inline-block; }
-.lg.outdoor { background: #3b82f6; }
-.lg.patch { background: #eab308; }
-.lg.led { width: 10px; height: 10px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 8px #22c55e; }
-.poe-steps { margin: 0; padding-left: 22px; display: flex; flex-direction: column; gap: 12px; color: var(--text-2); font-size: 15px; }
-.poe-steps b { color: var(--text); }
-
-.pd-wall { stroke: var(--text-3); stroke-width: 2; stroke-dasharray: 8 7; opacity: 0.6; }
-.pd-zone { font-size: 13px; font-weight: 800; letter-spacing: 0.1em; fill: var(--text-3); font-family: var(--font); }
-.pd-box { stroke-width: 2; }
-.pd-box.switch { fill: #2b313b; stroke: #151a21; }
-.pd-box.poe { fill: #f3f4f6; stroke: #9ca3af; }
-.pd-box.router { fill: #ffffff; stroke: #9ca3af; }
-:root[data-theme='dark'] .pd-box.poe { fill: #d8dce2; }
-:root[data-theme='dark'] .pd-box.router { fill: #e9ecf0; }
-.pd-title { font-size: 16px; font-weight: 800; fill: #1f2937; font-family: var(--font); }
-.pd-box.switch + .pd-title, .switch ~ .pd-title { fill: #f3f4f6; }
-.switch ~ .pd-small { fill: #cbd5e1; }
-.pd-brand { font-size: 19px; font-weight: 900; font-style: italic; fill: #ec6e1f; font-family: 'Arial Black', Arial, sans-serif; }
-.pd-small { font-size: 12px; fill: #6b7280; font-family: var(--font); font-weight: 600; }
-.pd-antenna { stroke: #9ca3af; stroke-width: 6; stroke-linecap: round; }
-.pd-port { fill: #d1d5db; stroke: #6b7280; stroke-width: 1.5; }
-.pd-port.on { fill: #bbf7d0; stroke: #16a34a; }
-.pd-port-hole { fill: #1f2937; }
-.pd-port-hole.dim { fill: #0b0f14; }
-.pd-port-label { font-size: 12px; font-weight: 800; fill: #374151; font-family: var(--font); }
-.pd-power { stroke: #111827; stroke-width: 3; }
-.pd-led { stroke: rgba(0, 0, 0, 0.25); stroke-width: 1; }
-.pd-led.power { fill: #22c55e; }
-.pd-led.off { fill: #9ca3af; }
-.pd-led.check { fill: #f59e0b; }
-.pd-led.blink { fill: #22c55e; animation: pd-blink 0.7s steps(2, start) infinite; }
-@keyframes pd-blink { to { fill: #14532d; } }
-.pd-led-ring { fill: none; stroke: #f59e0b; stroke-width: 2.5; animation: pd-ring 1.4s ease-out infinite; transform-box: fill-box; transform-origin: center; }
-@keyframes pd-ring { from { opacity: 1; transform: scale(0.7); } to { opacity: 0; transform: scale(1.6); } }
-.pd-cable { fill: none; stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
-.pd-cable.outdoor { stroke: #3b82f6; }
-.pd-cable.patch { stroke: #eab308; }
-.pd-cable.flowing { stroke-dasharray: 14 8; animation: pd-flow 0.9s linear infinite; }
-@keyframes pd-flow { to { stroke-dashoffset: -22; } }
-.pd-cable.unplugged { stroke-dasharray: 4 6; opacity: 0.55; }
-.pd-cable-label { font-size: 13px; font-weight: 700; fill: var(--text-2); font-family: var(--font); }
-.svg-hl { animation: svg-pulse 1.4s ease-in-out infinite; }
-@keyframes svg-pulse { 50% { filter: drop-shadow(0 0 6px #3b9be0) drop-shadow(0 0 2px #3b9be0); } }
-
-.poe-flow { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 20px; align-items: start; }
-.poe-trail { list-style: none; margin: 0; padding: 14px; display: flex; flex-direction: column; gap: 4px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); backdrop-filter: var(--blur); }
-.poe-trail li { display: flex; align-items: center; gap: 12px; padding: 8px; border-radius: 10px; font-size: 14.5px; color: var(--text-2); }
-.poe-trail li.current { background: var(--brand-soft); color: var(--text); font-weight: 700; }
-.poe-card { padding: 26px; display: flex; flex-direction: column; gap: 12px; }
-.poe-card h3 { font-size: 23px; font-weight: 800; letter-spacing: -0.02em; }
-.poe-card p { color: var(--text-2); font-size: 16px; }
-.option.yes:hover { border-color: var(--ok-border); background: var(--ok-soft); }
-.option.no:hover { border-color: var(--bad-border); background: var(--bad-soft); }
-
 /* ───────── Responsive ───────── */
 
 @media (max-width: 1100px) {
@@ -432,15 +360,12 @@ select.td-input { padding-right: 10px; }
   .pl-device { position: static; order: -1; }
   .mig { grid-template-columns: minmax(0, 1fr); }
   .mig-side { position: static; }
-  .poe-how { grid-template-columns: minmax(0, 1fr); }
   .more-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media (max-width: 900px) {
   .wt { grid-template-columns: minmax(0, 1fr); grid-template-areas: 'card' 'device' 'steps'; }
   .wt-device { position: static; }
-  .poe-flow { grid-template-columns: minmax(0, 1fr); }
-  .poe-trail { order: 2; }
 }
 
 @media (max-width: 760px) {
@@ -449,8 +374,6 @@ select.td-input { padding-right: 10px; }
   .feature { min-height: 0; padding: 22px; }
   .feature-title { font-size: 24px; }
   .feature-icon { width: 60px; height: 60px; border-radius: 17px; }
-  .pd-wide { display: none; }
-  .pd-tall { display: block; }
 }
 
 @media (max-width: 699px) {
@@ -464,41 +387,62 @@ select.td-input { padding-right: 10px; }
   .desktop { padding: 12px 8px 54px; min-height: 0; }
   .cmd-body { height: 340px; font-size: 12.5px; }
   .pl-step { padding: 18px; gap: 12px; }
-  .poe-how { padding: 16px; }
-  .poe-card { padding: 20px 18px; }
-  .poe-card h3 { font-size: 20px; }
   .mig-link { margin-left: 0; }
 }
 
-/* ───────── Equipment photos with markers ───────── */
 
-.equip-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
-.equip { margin: 0; overflow: hidden; display: flex; flex-direction: column; }
-.equip-pic { position: relative; aspect-ratio: 4 / 3; background: #15181c; }
-.equip-pic img, .equip-art { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
-.equip-marker {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  border: 3px solid #fff;
-  background: #ec6e1f;
-  color: #fff;
-  font-weight: 800;
-  font-size: 14px;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-  transition: transform 0.15s, background 0.15s;
+/* ───────── Tenda first-time settings page ───────── */
+
+.tf { min-height: 100%; padding: 10px 10px 18px; background: #e6e6e6; color: #444; font-size: 15px; }
+.tf .td-logo { font-size: 22px; margin: 2px 0 8px 6px; }
+.tf-panel { padding: 8px 14px 18px; background: #ececec; border: 1px solid #d6d6d6; border-radius: 4px; display: flex; flex-direction: column; gap: 10px; }
+.tf-lead { margin: 0; text-align: center; color: #999; font-size: 14px; line-height: 1.45; }
+.tf-detect { margin: 0; text-align: center; color: #333; font-size: 14px; }
+.tf-detect span { color: #ec6e1f; }
+.tf hr { width: 100%; border: none; border-top: 1px solid #d4d4d4; margin: 6px 0; }
+.tf-head { display: flex; flex-direction: column; align-items: center; gap: 6px; color: #333; text-align: center; font-size: 15px; line-height: 1.5; }
+.tf-head svg { color: #555; }
+.tf-label { font-size: 15px; color: #333; }
+.tf-radios { display: flex; flex-wrap: wrap; gap: 4px 12px; }
+.tf-radio { display: inline-flex; align-items: center; gap: 6px; font-size: 15px; color: #333; cursor: pointer; }
+.tf-radio input { position: absolute; opacity: 0; pointer-events: none; }
+.tf-dot { width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid #666; background: #fff; display: inline-block; position: relative; }
+.tf-radio input:checked + .tf-dot { border-color: #1a73e8; }
+.tf-radio input:checked + .tf-dot::after { content: ''; position: absolute; inset: 3px; border-radius: 50%; background: #1a73e8; }
+.tf-hint { margin: 0; color: #bdbdbd; font-size: 14px; line-height: 1.45; }
+.tf-field { display: flex; flex-direction: column; gap: 6px; padding: 2px; }
+.tf-field.center .tf-label { text-align: center; }
+.tf-field input { width: 100%; height: 40px; padding: 0 40px 0 12px; border: 1px solid #d6d6d6; border-radius: 4px; background: #fff; color: #333; font: inherit; font-size: 15px; outline: none; }
+.tf-field input::placeholder { color: #aaa; }
+.tf-field input:focus { border-color: #ec6e1f; }
+.tf-input-wrap { position: relative; display: flex; }
+.tf-eye { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); border: none; background: none; color: #bbb; padding: 4px; display: flex; cursor: pointer; }
+.tf-ok { height: 40px; margin-top: 10px; border: none; border-radius: 3px; background: #ec6e1f; color: #fff; font: inherit; font-size: 15px; cursor: pointer; }
+.tf-ok:hover { background: #df6417; }
+
+/* ───────── PoE (simple) ───────── */
+
+.poe-setup { padding: 22px 24px; display: flex; flex-direction: column; gap: 14px; }
+.poe-chain { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.poe-chain li { display: flex; align-items: center; gap: 12px; font-size: 16px; }
+.poe-chain-text { line-height: 1.5; }
+.poe-chain-text svg { vertical-align: -3px; }
+.poe-chain-icon { width: 40px; height: 40px; border-radius: 11px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: var(--brand-soft); color: var(--brand-text); }
+.poe-chain-arrow { color: var(--text-3); }
+.poe-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 14px; }
+.poe-item { display: flex; gap: 16px; padding: 22px; }
+.poe-item-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px; }
+.poe-item h3 { font-size: 19px; font-weight: 750; }
+.poe-item p { color: var(--text-2); font-size: 15.5px; }
+.poe-outcomes { list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.poe-outcomes li { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 12px; padding: 10px 12px; border-radius: 10px; background: var(--surface-2); border: 1px solid var(--border); font-size: 15px; }
+.poe-when { font-weight: 700; min-width: 150px; }
+.poe-then { flex: 1; min-width: 180px; color: var(--text-2); }
+@media (max-width: 699px) {
+  .poe-item { padding: 18px; gap: 12px; }
+  .poe-when { min-width: 0; width: 100%; }
 }
-.equip-marker::after { content: ''; position: absolute; inset: -9px; border-radius: 50%; border: 2px solid rgba(236, 110, 31, 0.7); animation: pd-ring 1.8s ease-out infinite; }
-.equip-marker.active, .equip-marker:hover { transform: translate(-50%, -50%) scale(1.18); background: var(--brand); }
-.equip figcaption { padding: 18px 20px 20px; display: flex; flex-direction: column; gap: 12px; }
-.equip h3 { font-size: 18px; font-weight: 750; }
-.equip-legend { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
-.equip-legend li { display: flex; gap: 12px; padding: 8px; border-radius: 10px; font-size: 14.5px; color: var(--text-2); }
-.equip-legend li.active { background: var(--brand-soft); }
-.equip-legend b { color: var(--text); }
-.equip-n { width: 24px; height: 24px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: #ec6e1f; color: #fff; font-size: 12.5px; font-weight: 800; }
-.equip-note { margin: 0; padding: 10px 12px; border-radius: 10px; background: var(--warn-soft); border: 1px solid var(--warn-border); font-size: 13.5px; color: var(--text); }
-@media (max-width: 900px) { .equip-grid { grid-template-columns: minmax(0, 1fr); } }
+
+/* A status pill named "check" shares a class with checklist buttons; keep it a pill. */
+.status.check { width: auto; display: inline-flex; align-items: center; gap: 6px; padding: 0 10px; border: none; border-radius: 999px; font-size: 12.5px; cursor: default; background: var(--warn-soft); }
+.poe-outcomes .status { flex: 0 0 auto; }

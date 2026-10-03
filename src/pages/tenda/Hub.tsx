@@ -4,10 +4,10 @@ import { Caption, CopyButton } from '../../components/ui'
 import { TendaLogo } from '../../sim/Tenda'
 
 const TASKS: { to: string; icon: IconData; title: string; text: string; tag: string }[] = [
-  { to: '/tenda/setup', icon: ic.settingsEthernet, title: 'Set up a new router', text: 'PPPoE username and password, Wi-Fi name and password, reconnect, login password and remote management.', tag: '10 steps' },
-  { to: '/tenda/wifi-password', icon: ic.wifiPassword, title: 'Change the Wi-Fi password', text: 'Log in with the PPPoE username, go to Wireless Settings, save the new password and reconnect devices.', tag: '6 steps' },
-  { to: '/tenda/packet-loss', icon: ic.terminal, title: 'Packet loss test (ping)', text: 'Open Command Prompt, type ping and an IP address, and read the loss percentage.', tag: 'Command Prompt' },
-  { to: '/tenda/migration', icon: ic.swapHoriz, title: 'Migrate to a new router', text: 'Record the old router, swap it, set up the new one with the same details, then check and close.', tag: 'Checklist' },
+  { to: '/tenda/setup', icon: ic.settingsEthernet, title: 'Set up a new router', text: 'PPPoE, Wi-Fi name and password, login password and remote management.', tag: '6 steps' },
+  { to: '/tenda/wifi-password', icon: ic.wifiPassword, title: 'Change the Wi-Fi password', text: 'Log in, Wireless Settings, new password, reconnect.', tag: '6 steps' },
+  { to: '/tenda/packet-loss', icon: ic.terminal, title: 'Packet loss test (ping)', text: 'Open Command Prompt and type ping with an IP address.', tag: 'Command Prompt' },
+  { to: '/tenda/migration', icon: ic.swapHoriz, title: 'Migrate to a new router', text: 'Swap the router and keep the client’s settings.', tag: 'Checklist' },
 ]
 
 export function TendaHub() {
@@ -17,7 +17,7 @@ export function TendaHub() {
         <div>
           <Caption>Tenda Router</Caption>
           <h1>Tenda router walkthroughs</h1>
-          <p>Practise on a working copy of the Tenda phone interface, then guide the client through the same screens.</p>
+          <p>Pick a task.</p>
         </div>
       </header>
 
