@@ -6,11 +6,11 @@ import logoDarkUrl from '../assets/vtl-logo-compact-dark.png'
 import { Icon, ic } from '../icons'
 
 const NAV = [
-  { to: '/', label: 'Guides', icon: ic.checklist, end: true },
+  { to: '/', label: 'Home', icon: ic.homeOutline, end: true },
+  { to: '/tenda', label: 'Tenda Router', short: 'Tenda', icon: ic.router },
+  { to: '/poe', label: 'PoE Connection', short: 'PoE', icon: ic.electrical },
+  { to: '/guides', label: 'Troubleshooting', short: 'Guides', icon: ic.checklist },
   { to: '/incidents', label: 'Incidents', icon: ic.crisisAlert },
-  { to: '/router', label: 'Router setup', short: 'Router', icon: ic.router },
-  { to: '/commands', label: 'Commands', icon: ic.terminal },
-  { to: '/lights', label: 'Light guide', short: 'Lights', icon: ic.lightbulb },
 ]
 
 export function Layout({ children }: { children: ReactNode }) {

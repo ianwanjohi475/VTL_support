@@ -181,7 +181,7 @@ export function Guide() {
         <div className="page-head">
           <div>
             <h1>Guide not found</h1>
-            <p><Link to="/">Back to all guides</Link></p>
+            <p><Link to="/guides">Back to all guides</Link></p>
           </div>
         </div>
       </div>
@@ -194,7 +194,7 @@ export function Guide() {
 
   return (
     <div className="page">
-      <Link to="/" className="back-link"><Icon icon={ic.arrowBack} size={16} />All guides</Link>
+      <Link to="/guides" className="back-link"><Icon icon={ic.arrowBack} size={16} />All guides</Link>
       <header className="detail-head">
         <Tile icon={guide.icon} tone={guide.tone} size="lg" />
         <div>
