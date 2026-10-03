@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { Caption } from '../components/ui'
 import { Icon, ic } from '../icons'
+import { PoeDiagram } from '../components/PoeDiagram'
 
 const SETUP = [
   { from: 'Cable from outside switch', to: 'POE port', icon: ic.cable },
@@ -62,6 +63,8 @@ export function Poe() {
 
       <section className="card poe-setup">
         <h2 className="section-title">Setup</h2>
+        <div className="poe-setup-grid">
+        <div className="poe-diagram"><PoeDiagram mode="normal" led="blink" hl="none" /></div>
         <ol className="poe-chain">
           {SETUP.map(s => (
             <li key={s.from}>
@@ -70,6 +73,7 @@ export function Poe() {
             </li>
           ))}
         </ol>
+        </div>
       </section>
 
       <section className="section">

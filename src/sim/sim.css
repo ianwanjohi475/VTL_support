@@ -446,3 +446,64 @@ select.td-input { padding-right: 10px; }
 /* A status pill named "check" shares a class with checklist buttons; keep it a pill. */
 .status.check { width: auto; display: inline-flex; align-items: center; gap: 6px; padding: 0 10px; border: none; border-radius: 999px; font-size: 12.5px; cursor: default; background: var(--warn-soft); }
 .poe-outcomes .status { flex: 0 0 auto; }
+
+/* ───────── PoE wiring diagram ───────── */
+
+.pd { width: 100%; height: auto; display: block; }
+.pd-tall { display: none; max-width: 380px; margin: 0 auto; }
+.poe-legend { display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: 13px; color: var(--text-2); }
+.poe-legend span { display: inline-flex; align-items: center; gap: 7px; }
+.lg { width: 22px; height: 5px; border-radius: 3px; display: inline-block; }
+.lg.outdoor { background: #3b82f6; }
+.lg.patch { background: #eab308; }
+.lg.led { width: 10px; height: 10px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 8px #22c55e; }
+.poe-steps { margin: 0; padding-left: 22px; display: flex; flex-direction: column; gap: 12px; color: var(--text-2); font-size: 15px; }
+.poe-steps b { color: var(--text); }
+
+.pd-wall { stroke: var(--text-3); stroke-width: 2; stroke-dasharray: 8 7; opacity: 0.6; }
+.pd-zone { font-size: 13px; font-weight: 800; letter-spacing: 0.1em; fill: var(--text-3); font-family: var(--font); }
+.pd-box { stroke-width: 2; }
+.pd-box.switch { fill: #2b313b; stroke: #151a21; }
+.pd-box.poe { fill: #f3f4f6; stroke: #9ca3af; }
+.pd-box.router { fill: #ffffff; stroke: #9ca3af; }
+:root[data-theme='dark'] .pd-box.poe { fill: #d8dce2; }
+:root[data-theme='dark'] .pd-box.router { fill: #e9ecf0; }
+.pd-title { font-size: 16px; font-weight: 800; fill: #1f2937; font-family: var(--font); }
+.pd-box.switch + .pd-title, .switch ~ .pd-title { fill: #f3f4f6; }
+.switch ~ .pd-small { fill: #cbd5e1; }
+.pd-brand { font-size: 19px; font-weight: 900; font-style: italic; fill: #ec6e1f; font-family: 'Arial Black', Arial, sans-serif; }
+.pd-small { font-size: 12px; fill: #6b7280; font-family: var(--font); font-weight: 600; }
+.pd-antenna { stroke: #9ca3af; stroke-width: 6; stroke-linecap: round; }
+.pd-port { fill: #d1d5db; stroke: #6b7280; stroke-width: 1.5; }
+.pd-port.on { fill: #bbf7d0; stroke: #16a34a; }
+.pd-port-hole { fill: #1f2937; }
+.pd-port-hole.dim { fill: #0b0f14; }
+.pd-port-label { font-size: 12px; font-weight: 800; fill: #374151; font-family: var(--font); }
+.pd-power { stroke: #111827; stroke-width: 3; }
+.pd-led { stroke: rgba(0, 0, 0, 0.25); stroke-width: 1; }
+.pd-led.power { fill: #22c55e; }
+.pd-led.off { fill: #9ca3af; }
+.pd-led.check { fill: #f59e0b; }
+.pd-led.blink { fill: #22c55e; animation: pd-blink 0.7s steps(2, start) infinite; }
+@keyframes pd-blink { to { fill: #14532d; } }
+.pd-led-ring { fill: none; stroke: #f59e0b; stroke-width: 2.5; animation: pd-ring 1.4s ease-out infinite; transform-box: fill-box; transform-origin: center; }
+@keyframes pd-ring { from { opacity: 1; transform: scale(0.7); } to { opacity: 0; transform: scale(1.6); } }
+.pd-cable { fill: none; stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
+.pd-cable.outdoor { stroke: #3b82f6; }
+.pd-cable.patch { stroke: #eab308; }
+.pd-cable.flowing { stroke-dasharray: 14 8; animation: pd-flow 0.9s linear infinite; }
+@keyframes pd-flow { to { stroke-dashoffset: -22; } }
+.pd-cable.unplugged { stroke-dasharray: 4 6; opacity: 0.55; }
+.pd-cable-label { font-size: 13px; font-weight: 700; fill: var(--text-2); font-family: var(--font); }
+.svg-hl { animation: svg-pulse 1.4s ease-in-out infinite; }
+@keyframes svg-pulse { 50% { filter: drop-shadow(0 0 6px #3b9be0) drop-shadow(0 0 2px #3b9be0); } }
+
+
+@media (max-width: 760px) {
+  .pd-wide { display: none; }
+  .pd-tall { display: block; }
+}
+.poe-setup-grid { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 24px; align-items: center; }
+.poe-diagram { min-width: 0; }
+@media (max-width: 900px) { .poe-setup-grid { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 760px) { .poe-diagram .pd-tall { max-width: 300px; } }
